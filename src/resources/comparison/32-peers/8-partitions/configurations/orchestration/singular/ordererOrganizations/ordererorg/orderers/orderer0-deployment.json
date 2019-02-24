@@ -1,0 +1,298 @@
+{
+    "apiVersion": "apps/v1beta2",
+    "kind": "Deployment",
+    "metadata": {
+        "name": "orderer0-ordererorg",
+        "namespace": "ordererorg",
+        "labels": {}
+    },
+    "spec": {
+        "selector": {
+            "matchLabels": {
+                "app": "hyperledger",
+                "role": "orderer",
+                "org": "ordererorg",
+                "orderer-id": "orderer0"
+            }
+        },
+        "template": {
+            "metadata": {
+                "labels": {
+                    "app": "hyperledger",
+                    "role": "orderer",
+                    "org": "ordererorg",
+                    "orderer-id": "orderer0"
+                }
+            },
+            "spec": {
+                "affinity": {
+                    "podAntiAffinity": {
+                        "requiredDuringSchedulingIgnoredDuringExecution": [
+                            {
+                                "labelSelector": {
+                                    "matchLabels": {
+                                        "role": "peer"
+                                    }
+                                },
+                                "namespaces": [
+                                    "org1",
+                                    "ordererorg"
+                                ],
+                                "topologyKey": "kubernetes.io/hostname"
+                            }
+                        ]
+                    },
+                    "nodeAffinity": {
+                        "requiredDuringSchedulingIgnoredDuringExecution": {
+                            "nodeSelectorTerms": [
+                                {
+                                    "matchExpressions": [
+                                        {
+                                            "key": "kops.k8s.io/instancegroup",
+                                            "operator": "NotIn",
+                                            "values": [
+                                                "loadgenerator"
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                },
+                "initContainers": [
+                    {
+                        "name": "funnel",
+                        "image": "kubechain/funnel:1.1.0",
+                        "imagePullPolicy": "IfNotPresent",
+                        "ports": [],
+                        "env": [],
+                        "volumeMounts": [
+                            {
+                                "name": "455b264b-d41e-54f2-bef8-807f0bc770de-volume",
+                                "mountPath": "/usr/src/app/from/orderers/orderer0.ordererorg/msp/admincerts"
+                            },
+                            {
+                                "name": "3a2affe8-5e3b-54ad-acc0-653fddec29fc-volume",
+                                "mountPath": "/usr/src/app/from/orderers/orderer0.ordererorg/msp/cacerts"
+                            },
+                            {
+                                "name": "89eb6b42-70d3-50d8-a73a-88fc98630b5e-volume",
+                                "mountPath": "/usr/src/app/from/orderers/orderer0.ordererorg/msp/keystore"
+                            },
+                            {
+                                "name": "22bdb736-6bc1-5b27-bfba-2ee5506eaaff-volume",
+                                "mountPath": "/usr/src/app/from/orderers/orderer0.ordererorg/msp/signcerts"
+                            },
+                            {
+                                "name": "596230e2-f67c-557e-9fa0-1224c61724a6-volume",
+                                "mountPath": "/usr/src/app/from/orderers/orderer0.ordererorg/msp/tlscacerts"
+                            },
+                            {
+                                "name": "1e8ac25d-ad25-580e-9e7f-1ff18cd4c28a-volume",
+                                "mountPath": "/usr/src/app/from/orderers/orderer0.ordererorg/tls"
+                            },
+                            {
+                                "name": "ordererorg-genesis-block-volume",
+                                "mountPath": "/usr/src/app/from/genesis"
+                            },
+                            {
+                                "name": "orderer0-ordererorg-volume",
+                                "mountPath": "/usr/src/app/to/genesis",
+                                "subPath": "genesis"
+                            },
+                            {
+                                "name": "orderer0-ordererorg-volume",
+                                "mountPath": "/usr/src/app/to/orderers/orderer0.ordererorg",
+                                "subPath": "orderers/orderer0.ordererorg"
+                            }
+                        ]
+                    }
+                ],
+                "containers": [
+                    {
+                        "name": "orderer0-ordererorg",
+                        "image": "hyperledger/fabric-orderer:1.2.0",
+                        "imagePullPolicy": "IfNotPresent",
+                        "command": [
+                            "orderer"
+                        ],
+                        "ports": [
+                            {
+                                "containerPort": 7050
+                            }
+                        ],
+                        "env": [
+                            {
+                                "name": "ORDERER_GENERAL_LOGLEVEL",
+                                "value": "debug"
+                            },
+                            {
+                                "name": "ORDERER_GENERAL_LISTENADDRESS",
+                                "value": "0.0.0.0"
+                            },
+                            {
+                                "name": "ORDERER_GENERAL_GENESISMETHOD",
+                                "value": "file"
+                            },
+                            {
+                                "name": "ORDERER_GENERAL_GENESISFILE",
+                                "value": "/var/hyperledger/orderer/orderer.genesis.block"
+                            },
+                            {
+                                "name": "ORDERER_GENERAL_LOCALMSPID",
+                                "value": "OrdererOrg"
+                            },
+                            {
+                                "name": "ORDERER_GENERAL_LOCALMSPDIR",
+                                "value": "/var/hyperledger/orderer/msp"
+                            },
+                            {
+                                "name": "ORDERER_GENERAL_TLS_ENABLED",
+                                "value": "false"
+                            },
+                            {
+                                "name": "ORDERER_GENERAL_TLS_PRIVATEKEY",
+                                "value": "/var/hyperledger/orderer/tls/server.key"
+                            },
+                            {
+                                "name": "ORDERER_GENERAL_TLS_CERTIFICATE",
+                                "value": "/var/hyperledger/orderer/tls/server.crt"
+                            },
+                            {
+                                "name": "ORDERER_GENERAL_TLS_ROOTCAS",
+                                "value": "[/var/hyperledger/orderer/tls/ca.crt]"
+                            }
+                        ],
+                        "volumeMounts": [
+                            {
+                                "name": "orderer0-ordererorg-volume",
+                                "mountPath": "/var/hyperledger/orderer/orderer.genesis.block",
+                                "subPath": "genesis/genesis.block"
+                            },
+                            {
+                                "name": "orderer0-ordererorg-volume",
+                                "mountPath": "/var/hyperledger/orderer/msp",
+                                "subPath": "orderers/orderer0.ordererorg/msp"
+                            },
+                            {
+                                "name": "orderer0-ordererorg-volume",
+                                "mountPath": "/var/hyperledger/orderer/tls",
+                                "subPath": "orderers/orderer0.ordererorg/tls"
+                            }
+                        ],
+                        "workingDir": "/opt/gopath/src/github.com/hyperledger/fabric/orderer"
+                    }
+                ],
+                "volumes": [
+                    {
+                        "name": "orderer0-ordererorg-volume",
+                        "persistentVolumeClaim": {
+                            "claimName": "orderer0-ordererorg"
+                        }
+                    },
+                    {
+                        "name": "ordererorg-genesis-block-volume",
+                        "secret": {
+                            "items": [
+                                {
+                                    "key": "genesis.block",
+                                    "path": "genesis.block"
+                                }
+                            ],
+                            "secretName": "ordererorg-genesis-block",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "455b264b-d41e-54f2-bef8-807f0bc770de-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "Admin-ordererorg-cert.pem",
+                                    "path": "Admin@ordererorg-cert.pem"
+                                }
+                            ],
+                            "name": "455b264b-d41e-54f2-bef8-807f0bc770de",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "3a2affe8-5e3b-54ad-acc0-653fddec29fc-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "ca.ordererorg-cert.pem",
+                                    "path": "ca.ordererorg-cert.pem"
+                                }
+                            ],
+                            "name": "3a2affe8-5e3b-54ad-acc0-653fddec29fc",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "89eb6b42-70d3-50d8-a73a-88fc98630b5e-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "68518e4adab020e3939d5a94cac7e286b649e4b4dc2d6c4fc981d9d9d93ab54d_sk",
+                                    "path": "68518e4adab020e3939d5a94cac7e286b649e4b4dc2d6c4fc981d9d9d93ab54d_sk"
+                                }
+                            ],
+                            "name": "89eb6b42-70d3-50d8-a73a-88fc98630b5e",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "22bdb736-6bc1-5b27-bfba-2ee5506eaaff-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "orderer0.ordererorg-cert.pem",
+                                    "path": "orderer0.ordererorg-cert.pem"
+                                }
+                            ],
+                            "name": "22bdb736-6bc1-5b27-bfba-2ee5506eaaff",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "596230e2-f67c-557e-9fa0-1224c61724a6-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "tlsca.ordererorg-cert.pem",
+                                    "path": "tlsca.ordererorg-cert.pem"
+                                }
+                            ],
+                            "name": "596230e2-f67c-557e-9fa0-1224c61724a6",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "1e8ac25d-ad25-580e-9e7f-1ff18cd4c28a-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "ca.crt",
+                                    "path": "ca.crt"
+                                },
+                                {
+                                    "key": "server.crt",
+                                    "path": "server.crt"
+                                },
+                                {
+                                    "key": "server.key",
+                                    "path": "server.key"
+                                }
+                            ],
+                            "name": "1e8ac25d-ad25-580e-9e7f-1ff18cd4c28a",
+                            "optional": false
+                        }
+                    }
+                ],
+                "nodeSelector": {}
+            }
+        }
+    }
+}

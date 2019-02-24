@@ -1,0 +1,510 @@
+{
+    "apiVersion": "apps/v1beta2",
+    "kind": "Deployment",
+    "metadata": {
+        "name": "caliper-deployment",
+        "namespace": "test-runner",
+        "labels": {}
+    },
+    "spec": {
+        "selector": {
+            "matchLabels": {
+                "app": "test-runner"
+            }
+        },
+        "template": {
+            "metadata": {
+                "labels": {
+                    "app": "test-runner"
+                }
+            },
+            "spec": {
+                "affinity": {
+                    "podAntiAffinity": {
+                        "requiredDuringSchedulingIgnoredDuringExecution": [
+                            {
+                                "labelSelector": {
+                                    "matchExpressions": [
+                                        {
+                                            "key": "role",
+                                            "operator": "In",
+                                            "values": [
+                                                "peer",
+                                                "orderer"
+                                            ]
+                                        }
+                                    ]
+                                },
+                                "namespaces": [
+                                    "org1",
+                                    "ordererorg"
+                                ],
+                                "topologyKey": "kubernetes.io/hostname"
+                            }
+                        ]
+                    }
+                },
+                "initContainers": [
+                    {
+                        "name": "funnel",
+                        "image": "kubechain/funnel:1.1.0",
+                        "imagePullPolicy": "IfNotPresent",
+                        "ports": [],
+                        "env": [],
+                        "volumeMounts": [
+                            {
+                                "name": "f8c01fa1-03a8-5108-82e9-5cb7cdd0a969-volume",
+                                "mountPath": "/usr/src/app/from/simple-addition-chaincode"
+                            },
+                            {
+                                "name": "pass-through-volume",
+                                "mountPath": "/usr/src/app/to"
+                            }
+                        ]
+                    }
+                ],
+                "containers": [
+                    {
+                        "name": "caliper",
+                        "image": "robertdiebels/caliper:0.6.0",
+                        "imagePullPolicy": "Always",
+                        "command": [
+                            "npm",
+                            "run",
+                            "start-server"
+                        ],
+                        "ports": [
+                            {
+                                "name": "http",
+                                "containerPort": 3000
+                            }
+                        ],
+                        "env": [
+                            {
+                                "name": "GOPATH",
+                                "value": "/caliper/golang"
+                            },
+                            {
+                                "name": "OVERWRITE_GOPATH",
+                                "value": "FALSE"
+                            }
+                        ],
+                        "volumeMounts": [
+                            {
+                                "name": "caliper-network-configuration-volume",
+                                "mountPath": "/caliper/network/configuration.json",
+                                "subPath": "network.json"
+                            },
+                            {
+                                "name": "caliper-benchmark-configuration-volume",
+                                "mountPath": "/caliper/benchmark/configuration.json",
+                                "subPath": "benchmark.json"
+                            },
+                            {
+                                "name": "825daf96-0e52-5b2c-bec7-fafc398bc962-volume",
+                                "mountPath": "/caliper/benchmark/callbacks"
+                            },
+                            {
+                                "name": "178c7c52-fbfe-5d1a-b916-efec8b77365b-volume",
+                                "mountPath": "/caliper/network/channels/kubechain"
+                            },
+                            {
+                                "name": "pass-through-volume",
+                                "mountPath": "/caliper/golang/src"
+                            },
+                            {
+                                "name": "d9eb6b3c-6fc0-510b-81c0-839f2861232c-volume",
+                                "mountPath": "/caliper/network/crypto/org1/users/Admin@org1/msp/keystore"
+                            },
+                            {
+                                "name": "672c2a8a-71a2-5484-aca0-d001fa484947-volume",
+                                "mountPath": "/caliper/network/crypto/org1/users/Admin@org1/msp/signcerts"
+                            },
+                            {
+                                "name": "21b01815-3f3b-58b5-87e7-b61acebd8c22-volume",
+                                "mountPath": "/caliper/network/crypto/org1/peers/peer0.org1/tls"
+                            },
+                            {
+                                "name": "58b25330-1de6-5cef-a572-f12369c76eab-volume",
+                                "mountPath": "/caliper/network/crypto/org1/peers/peer1.org1/tls"
+                            },
+                            {
+                                "name": "6355cc9f-4f78-535e-a3f0-c717785d607d-volume",
+                                "mountPath": "/caliper/network/crypto/org1/peers/peer2.org1/tls"
+                            },
+                            {
+                                "name": "faec1d3b-15b7-5646-8a9d-31e861edace6-volume",
+                                "mountPath": "/caliper/network/crypto/org1/peers/peer3.org1/tls"
+                            },
+                            {
+                                "name": "a7394b3c-e30d-59fd-9064-c501fe961c96-volume",
+                                "mountPath": "/caliper/network/crypto/org1/peers/peer4.org1/tls"
+                            },
+                            {
+                                "name": "eae5ea4a-687e-53c7-8f8e-b3b30464c045-volume",
+                                "mountPath": "/caliper/network/crypto/org1/peers/peer5.org1/tls"
+                            },
+                            {
+                                "name": "e8112ca2-c08e-5a7b-af91-e6b6c4236a82-volume",
+                                "mountPath": "/caliper/network/crypto/org1/peers/peer6.org1/tls"
+                            },
+                            {
+                                "name": "ea8a3251-d40e-5505-82cd-44c8738d5e1d-volume",
+                                "mountPath": "/caliper/network/crypto/org1/peers/peer7.org1/tls"
+                            },
+                            {
+                                "name": "9b90dfef-5208-5547-ba71-4a8ca1d87271-volume",
+                                "mountPath": "/caliper/network/crypto/ordererorg/orderers/orderer0.ordererorg/tls"
+                            },
+                            {
+                                "name": "9e484240-3f5a-5824-8cb7-71e6b28655f7-volume",
+                                "mountPath": "/caliper/network/crypto/ordererorg/users/Admin@ordererorg/msp/keystore"
+                            },
+                            {
+                                "name": "4399a919-8626-53f0-9b71-90c3d69c0cd3-volume",
+                                "mountPath": "/caliper/network/crypto/ordererorg/users/Admin@ordererorg/msp/signcerts"
+                            },
+                            {
+                                "name": "reports-volume",
+                                "mountPath": "/caliper/reports"
+                            }
+                        ],
+                        "resources": {
+                            "limits": {
+                                "cpu": 14,
+                                "memory": "12Gi"
+                            }
+                        }
+                    }
+                ],
+                "volumes": [
+                    {
+                        "name": "caliper-network-configuration-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "network.json",
+                                    "path": "network.json"
+                                }
+                            ],
+                            "name": "caliper-network-configuration",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "caliper-benchmark-configuration-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "benchmark.json",
+                                    "path": "benchmark.json"
+                                }
+                            ],
+                            "name": "caliper-benchmark-configuration",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "825daf96-0e52-5b2c-bec7-fafc398bc962-volume",
+                        "secret": {
+                            "items": [
+                                {
+                                    "key": "main.js",
+                                    "path": "main.js"
+                                },
+                                {
+                                    "key": "update.js",
+                                    "path": "update.js"
+                                }
+                            ],
+                            "secretName": "825daf96-0e52-5b2c-bec7-fafc398bc962",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "178c7c52-fbfe-5d1a-b916-efec8b77365b-volume",
+                        "secret": {
+                            "items": [
+                                {
+                                    "key": "kubechain.tx",
+                                    "path": "kubechain.tx"
+                                },
+                                {
+                                    "key": "Org1anchors.tx",
+                                    "path": "Org1anchors.tx"
+                                }
+                            ],
+                            "secretName": "178c7c52-fbfe-5d1a-b916-efec8b77365b",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "f8c01fa1-03a8-5108-82e9-5cb7cdd0a969-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "simple-addition-chaincode.go",
+                                    "path": "simple-addition-chaincode.go"
+                                }
+                            ],
+                            "name": "f8c01fa1-03a8-5108-82e9-5cb7cdd0a969",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "pass-through-volume",
+                        "emptyDir": {}
+                    },
+                    {
+                        "name": "reports-volume",
+                        "emptyDir": {}
+                    },
+                    {
+                        "name": "d9eb6b3c-6fc0-510b-81c0-839f2861232c-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "dadab45b24d1d0896290438de8535bd99db7c0a50b7b5b84323ec79dee62365a_sk",
+                                    "path": "dadab45b24d1d0896290438de8535bd99db7c0a50b7b5b84323ec79dee62365a_sk"
+                                }
+                            ],
+                            "name": "d9eb6b3c-6fc0-510b-81c0-839f2861232c",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "672c2a8a-71a2-5484-aca0-d001fa484947-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "Admin-org1-cert.pem",
+                                    "path": "Admin@org1-cert.pem"
+                                }
+                            ],
+                            "name": "672c2a8a-71a2-5484-aca0-d001fa484947",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "21b01815-3f3b-58b5-87e7-b61acebd8c22-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "ca.crt",
+                                    "path": "ca.crt"
+                                },
+                                {
+                                    "key": "server.crt",
+                                    "path": "server.crt"
+                                },
+                                {
+                                    "key": "server.key",
+                                    "path": "server.key"
+                                }
+                            ],
+                            "name": "21b01815-3f3b-58b5-87e7-b61acebd8c22",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "58b25330-1de6-5cef-a572-f12369c76eab-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "ca.crt",
+                                    "path": "ca.crt"
+                                },
+                                {
+                                    "key": "server.crt",
+                                    "path": "server.crt"
+                                },
+                                {
+                                    "key": "server.key",
+                                    "path": "server.key"
+                                }
+                            ],
+                            "name": "58b25330-1de6-5cef-a572-f12369c76eab",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "6355cc9f-4f78-535e-a3f0-c717785d607d-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "ca.crt",
+                                    "path": "ca.crt"
+                                },
+                                {
+                                    "key": "server.crt",
+                                    "path": "server.crt"
+                                },
+                                {
+                                    "key": "server.key",
+                                    "path": "server.key"
+                                }
+                            ],
+                            "name": "6355cc9f-4f78-535e-a3f0-c717785d607d",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "faec1d3b-15b7-5646-8a9d-31e861edace6-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "ca.crt",
+                                    "path": "ca.crt"
+                                },
+                                {
+                                    "key": "server.crt",
+                                    "path": "server.crt"
+                                },
+                                {
+                                    "key": "server.key",
+                                    "path": "server.key"
+                                }
+                            ],
+                            "name": "faec1d3b-15b7-5646-8a9d-31e861edace6",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "a7394b3c-e30d-59fd-9064-c501fe961c96-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "ca.crt",
+                                    "path": "ca.crt"
+                                },
+                                {
+                                    "key": "server.crt",
+                                    "path": "server.crt"
+                                },
+                                {
+                                    "key": "server.key",
+                                    "path": "server.key"
+                                }
+                            ],
+                            "name": "a7394b3c-e30d-59fd-9064-c501fe961c96",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "eae5ea4a-687e-53c7-8f8e-b3b30464c045-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "ca.crt",
+                                    "path": "ca.crt"
+                                },
+                                {
+                                    "key": "server.crt",
+                                    "path": "server.crt"
+                                },
+                                {
+                                    "key": "server.key",
+                                    "path": "server.key"
+                                }
+                            ],
+                            "name": "eae5ea4a-687e-53c7-8f8e-b3b30464c045",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "e8112ca2-c08e-5a7b-af91-e6b6c4236a82-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "ca.crt",
+                                    "path": "ca.crt"
+                                },
+                                {
+                                    "key": "server.crt",
+                                    "path": "server.crt"
+                                },
+                                {
+                                    "key": "server.key",
+                                    "path": "server.key"
+                                }
+                            ],
+                            "name": "e8112ca2-c08e-5a7b-af91-e6b6c4236a82",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "ea8a3251-d40e-5505-82cd-44c8738d5e1d-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "ca.crt",
+                                    "path": "ca.crt"
+                                },
+                                {
+                                    "key": "server.crt",
+                                    "path": "server.crt"
+                                },
+                                {
+                                    "key": "server.key",
+                                    "path": "server.key"
+                                }
+                            ],
+                            "name": "ea8a3251-d40e-5505-82cd-44c8738d5e1d",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "9b90dfef-5208-5547-ba71-4a8ca1d87271-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "ca.crt",
+                                    "path": "ca.crt"
+                                },
+                                {
+                                    "key": "server.crt",
+                                    "path": "server.crt"
+                                },
+                                {
+                                    "key": "server.key",
+                                    "path": "server.key"
+                                }
+                            ],
+                            "name": "9b90dfef-5208-5547-ba71-4a8ca1d87271",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "9e484240-3f5a-5824-8cb7-71e6b28655f7-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "7b7dac3e1e2114fc938e3c41b97e02713b9a3139b4627a499fd8fcda7657d8c7_sk",
+                                    "path": "7b7dac3e1e2114fc938e3c41b97e02713b9a3139b4627a499fd8fcda7657d8c7_sk"
+                                }
+                            ],
+                            "name": "9e484240-3f5a-5824-8cb7-71e6b28655f7",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "4399a919-8626-53f0-9b71-90c3d69c0cd3-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "Admin-ordererorg-cert.pem",
+                                    "path": "Admin@ordererorg-cert.pem"
+                                }
+                            ],
+                            "name": "4399a919-8626-53f0-9b71-90c3d69c0cd3",
+                            "optional": false
+                        }
+                    }
+                ],
+                "nodeSelector": {
+                    "kops.k8s.io/instancegroup": "loadgenerator"
+                }
+            }
+        }
+    }
+}

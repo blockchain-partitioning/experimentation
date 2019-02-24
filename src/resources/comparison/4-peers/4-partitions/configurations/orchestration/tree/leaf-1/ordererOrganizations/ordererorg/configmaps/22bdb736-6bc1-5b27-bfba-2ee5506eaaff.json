@@ -1,0 +1,12 @@
+{
+    "apiVersion": "v1",
+    "kind": "ConfigMap",
+    "metadata": {
+        "name": "22bdb736-6bc1-5b27-bfba-2ee5506eaaff",
+        "namespace": "ordererorg",
+        "labels": {}
+    },
+    "data": {
+        "orderer0.ordererorg-cert.pem": "-----BEGIN CERTIFICATE-----\nMIICCzCCAbGgAwIBAgIRAMknIbymW96VGky4OwDX7IswCgYIKoZIzj0EAwIwZzEL\nMAkGA1UEBhMCVVMxEzARBgNVBAgTCkNhbGlmb3JuaWExFjAUBgNVBAcTDVNhbiBG\ncmFuY2lzY28xEzARBgNVBAoTCm9yZGVyZXJvcmcxFjAUBgNVBAMTDWNhLm9yZGVy\nZXJvcmcwHhcNMTgxMjAxMTYxNjI5WhcNMjgxMTI4MTYxNjI5WjBYMQswCQYDVQQG\nEwJVUzETMBEGA1UECBMKQ2FsaWZvcm5pYTEWMBQGA1UEBxMNU2FuIEZyYW5jaXNj\nbzEcMBoGA1UEAxMTb3JkZXJlcjAub3JkZXJlcm9yZzBZMBMGByqGSM49AgEGCCqG\nSM49AwEHA0IABJUk2gS2ZFRHpu/6VOcViwB54nSrnT0k0mRjGRT+n7WNIBykjzSC\nqVJ+uF3SBl+OWykNOwdWeS5q8wdDOtZQVk2jTTBLMA4GA1UdDwEB/wQEAwIHgDAM\nBgNVHRMBAf8EAjAAMCsGA1UdIwQkMCKAID6wH0F5DrqOdRkgATgY2i3ak4CKFYCK\nm1PGeQp0PjQvMAoGCCqGSM49BAMCA0gAMEUCIQC3GQ11SFUFxAAYmAu5s04GcaeA\nbEZbztFmkAcpcdvleQIgb0DCO0xX8AnHxB47RFpffazimTevgQ9+BwK4iH2OLv4=\n-----END CERTIFICATE-----\n"
+    }
+}

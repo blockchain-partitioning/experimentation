@@ -1,0 +1,36 @@
+import IResource from "kubechain/src/main/lib/kubernetes-sdk/api/1.8/iresource";
+import ConfigMap from "kubechain/src/main/lib/kubernetes-sdk/api/1.8/configuration-storage/configuration/configmap/configmap";
+import ConfigurationDirectoryTreeVolumes from "kubechain/src/main/lib/blockchains/fabric/utilities/blockchain/volumes/configurationdirectorytreevolumes";
+import EnvVar from "kubechain/src/main/lib/kubernetes-sdk/api/1.8/workloads/container/envvar";
+import ChainCode from "kubechain/src/main/lib/blockchains/fabric/utilities/blockchain/chaincode/chaincode";
+import Channel from "kubechain/src/main/lib/blockchains/fabric/utilities/blockchain/channel/channel";
+import Options from "kubechain/src/main/lib/blockchains/fabric/options";
+export default class TestRunnerDeployment implements IResource {
+    private deployment;
+    private testRunnerContainer;
+    private crytpoMountPath;
+    private networkMountPath;
+    private peerOrganizationUtil;
+    private funnelContainer;
+    private chainCodeFunnelVolume;
+    private mountPaths;
+    constructor(options: Options);
+    private setAffinity;
+    private createInitContainer;
+    private mountChainCodeFunnelVolume;
+    private createContainer;
+    private addEnvironmentVariables;
+    addEnvironmentVariable(envVar: EnvVar): void;
+    mountCryptographicMaterial(directoryTreeVolumes: ConfigurationDirectoryTreeVolumes<ConfigMap>[], searchPaths: string[]): void;
+    addCryptographicMaterialAsVolumes(directoryTreeVolumes: ConfigurationDirectoryTreeVolumes<ConfigMap>[], searchPaths: string[]): void;
+    mountNetworkConfiguration(networkConfiguration: ConfigMap): void;
+    mountBenchMarkConfiguration(benchmarkConfiguration: ConfigMap): void;
+    addConfigurationAsVolume(configuration: ConfigMap): void;
+    private mountConfiguration;
+    toJson(): any;
+    mountChaincodes(chainCodes: ChainCode[]): void;
+    addChainCodesAsVolumes(chainCodes: ChainCode[]): void;
+    mountChannels(channels: Channel[]): void;
+    addChannelsAsVolumes(channels: Channel[]): void;
+    private addFunnelVolume;
+}

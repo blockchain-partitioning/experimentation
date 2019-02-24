@@ -1,0 +1,14 @@
+{
+    "apiVersion": "v1",
+    "kind": "Secret",
+    "metadata": {
+        "name": "178c7c52-fbfe-5d1a-b916-efec8b77365b",
+        "namespace": "test-runner",
+        "labels": {}
+    },
+    "type": "Opaque",
+    "data": {
+        "kubechain.tx": "CpECChcKFQgCGgYIxZKi4QUiCWt1YmVjaGFpbhL1AQryAQoJa3ViZWNoYWluEisSGQoLQXBwbGljYXRpb24SChIICgRPcmcxEgAaDgoKQ29uc29ydGl1bRIAGrcBEpABCgtBcHBsaWNhdGlvbhKAAQgBEggKBE9yZzESACIiCgdSZWFkZXJzEhcSDQgDEgkKB1JlYWRlcnMaBkFkbWlucyIiCgdXcml0ZXJzEhcSDQgDEgkKB1dyaXRlcnMaBkFkbWlucyIiCgZBZG1pbnMSGBIOCAMSCgoGQWRtaW5zEAIaBkFkbWlucyoGQWRtaW5zGiIKCkNvbnNvcnRpdW0SFBISChBTYW1wbGVDb25zb3J0aXVt",
+        "Org1anchors.tx": "CoYCCg8KDQgCIglrdWJlY2hhaW4S8gEK7wEKCWt1YmVjaGFpbhJUElIKC0FwcGxpY2F0aW9uEkMIARI3CgRPcmcxEi8aBwoDTVNQEgAiCwoHUmVhZGVycxIAIgsKB1dyaXRlcnMSACIKCgZBZG1pbnMSACoGQWRtaW5zGosBEogBCgtBcHBsaWNhdGlvbhJ5CAESbQoET3JnMRJlCAEaKgoLQW5jaG9yUGVlcnMSGxIRCg8KCnBlZXIwLm9yZzEQizcaBkFkbWlucxoHCgNNU1ASACILCgdSZWFkZXJzEgAiCwoHV3JpdGVycxIAIgoKBkFkbWlucxIAKgZBZG1pbnMqBkFkbWlucw=="
+    }
+}

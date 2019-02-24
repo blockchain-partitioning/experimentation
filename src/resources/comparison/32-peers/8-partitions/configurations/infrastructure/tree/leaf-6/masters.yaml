@@ -1,0 +1,20 @@
+apiVersion: kops/v1alpha2
+kind: InstanceGroup
+metadata:
+  labels:
+    kops.k8s.io/cluster: leaf-6.k8s.local
+  name: master-europe-west1-b
+spec:
+  image: cos-cloud/cos-stable-60-9592-90-0
+  machineType: n1-standard-1
+  maxSize: 1
+  minSize: 1
+  rootVolumeType: pd-standard
+  rootVolumeSize: 60
+  nodeLabels:
+    kops.k8s.io/instancegroup: master-europe-west1-b
+  role: Master
+  subnets:
+  - europe-west1
+  zones:
+  - europe-west1-b

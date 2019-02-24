@@ -1,0 +1,45 @@
+apiVersion: kops/v1alpha2
+kind: Cluster
+metadata:
+  name: leaf-8.k8s.local
+spec:
+  api:
+    loadBalancer:
+      type: Public
+  authorization:
+    alwaysAllow: {}
+  channel: stable
+  cloudProvider: gce
+  configBase: gs://graduate-project-kubernetes-clusters/leaf-8.k8s.local
+  networkID: leaf-8
+  etcdClusters:
+  - etcdMembers:
+    - instanceGroup: master-europe-west1-b
+      name: b
+    name: main
+  - etcdMembers:
+    - instanceGroup: master-europe-west1-b
+      name: b
+    name: events
+  iam:
+    allowContainerRegistry: true
+    legacy: false
+  kubernetesApiAccess:
+  - 0.0.0.0/0
+  kubernetesVersion: 1.8.7
+  masterPublicName: api.leaf-8.k8s.local
+  networking:
+    kubenet: {}
+  nonMasqueradeCIDR: 100.64.0.0/10
+  project: graduate-project-200311
+  sshAccess:
+  - 0.0.0.0/0
+  subnets:
+  - name: europe-west1
+    region: europe-west1
+    type: Public
+  topology:
+    dns:
+      type: Public
+    masters: public
+    nodes: public

@@ -1,0 +1,12 @@
+{
+    "apiVersion": "v1",
+    "kind": "ConfigMap",
+    "metadata": {
+        "name": "004cf8b1-9fed-5f3d-826d-f1afb7bb296d",
+        "namespace": "org1",
+        "labels": {}
+    },
+    "data": {
+        "tlsca.org1-cert.pem": "-----BEGIN CERTIFICATE-----\nMIICGDCCAb+gAwIBAgIQPh63HeHVK2ZBn0fjrqRKhjAKBggqhkjOPQQDAjBeMQsw\nCQYDVQQGEwJVUzETMBEGA1UECBMKQ2FsaWZvcm5pYTEWMBQGA1UEBxMNU2FuIEZy\nYW5jaXNjbzENMAsGA1UEChMEb3JnMTETMBEGA1UEAxMKdGxzY2Eub3JnMTAeFw0x\nODEyMjIwOTExMzlaFw0yODEyMTkwOTExMzlaMF4xCzAJBgNVBAYTAlVTMRMwEQYD\nVQQIEwpDYWxpZm9ybmlhMRYwFAYDVQQHEw1TYW4gRnJhbmNpc2NvMQ0wCwYDVQQK\nEwRvcmcxMRMwEQYDVQQDEwp0bHNjYS5vcmcxMFkwEwYHKoZIzj0CAQYIKoZIzj0D\nAQcDQgAExDpmqiS4OpDUSlAmgjFKU2l0lhkXCtIqoCvitnh5AvfX3jEyWSmbOyef\nKRgN/LqX4RMcLEaHHq04MfdnubuB1aNfMF0wDgYDVR0PAQH/BAQDAgGmMA8GA1Ud\nJQQIMAYGBFUdJQAwDwYDVR0TAQH/BAUwAwEB/zApBgNVHQ4EIgQgVIADoruwOe2h\n7QkkwV11yLQjrjU92OBDMOOVV5aVnvgwCgYIKoZIzj0EAwIDRwAwRAIgUWZALyaV\nI3f3lpnynknBc4WJMr7vbIxqGyqegS0XB38CIGBV4VhpkHzumc+On4ZWemvjuY5B\nBnDamBaGyxJa8vqo\n-----END CERTIFICATE-----\n"
+    }
+}

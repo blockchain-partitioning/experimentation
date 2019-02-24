@@ -1,0 +1,12 @@
+{
+    "apiVersion": "v1",
+    "kind": "ConfigMap",
+    "metadata": {
+        "name": "d9eb6b3c-6fc0-510b-81c0-839f2861232c",
+        "namespace": "test-runner",
+        "labels": {}
+    },
+    "data": {
+        "d7b207e69ab39c8dfe0544cf5bd2a4b4604d00904d861b2cd7d8635629d71122_sk": "-----BEGIN PRIVATE KEY-----\nMIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgZK8g8C8pkYKLUXda\nDeFn7GyPQrU0MQLnaVzhkq6IFCqhRANCAATVsLlHMUerIlUps6Oac4E0P1G85Qc7\nZlUASAvDJ0xwR3Vc1GHU92fyBSJIqkZJNfcb32Y8OO11G2P0gRlS1y0f\n-----END PRIVATE KEY-----\n"
+    }
+}

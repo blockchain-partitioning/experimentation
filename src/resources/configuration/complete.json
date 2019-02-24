@@ -1,0 +1,40 @@
+{
+  "amountOfSamples": 10,
+  "run": {
+    "variants": ["control", "treatment"],
+    "for": [
+      {
+        "peers": 4,
+        "partitions": [
+          2,
+          4,
+          8
+        ]
+      },
+      {
+        "peers": 8,
+        "partitions": [
+          2,
+          4,
+          8
+        ]
+      },
+      {
+        "peers": 16,
+        "partitions": [
+          2,
+          4,
+          8
+        ]
+      },
+      {
+        "peers": 32,
+        "partitions": [
+          2,
+          4,
+          8
+        ]
+      }
+    ]
+  }
+}

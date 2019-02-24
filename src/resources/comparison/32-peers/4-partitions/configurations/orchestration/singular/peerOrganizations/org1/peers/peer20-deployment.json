@@ -1,0 +1,353 @@
+{
+    "apiVersion": "apps/v1beta2",
+    "kind": "Deployment",
+    "metadata": {
+        "name": "peer20-org1",
+        "namespace": "org1",
+        "labels": {}
+    },
+    "spec": {
+        "selector": {
+            "matchLabels": {
+                "app": "hyperledger",
+                "role": "peer",
+                "peer-id": "peer20",
+                "org": "org1"
+            }
+        },
+        "template": {
+            "metadata": {
+                "labels": {
+                    "app": "hyperledger",
+                    "role": "peer",
+                    "peer-id": "peer20",
+                    "org": "org1"
+                }
+            },
+            "spec": {
+                "affinity": {
+                    "podAntiAffinity": {
+                        "requiredDuringSchedulingIgnoredDuringExecution": [
+                            {
+                                "labelSelector": {
+                                    "matchLabels": {
+                                        "role": "peer"
+                                    }
+                                },
+                                "namespaces": [
+                                    "org1",
+                                    "ordererorg"
+                                ],
+                                "topologyKey": "kubernetes.io/hostname"
+                            }
+                        ]
+                    },
+                    "nodeAffinity": {
+                        "requiredDuringSchedulingIgnoredDuringExecution": {
+                            "nodeSelectorTerms": [
+                                {
+                                    "matchExpressions": [
+                                        {
+                                            "key": "kops.k8s.io/instancegroup",
+                                            "operator": "NotIn",
+                                            "values": [
+                                                "loadgenerator"
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                },
+                "initContainers": [
+                    {
+                        "name": "funnel",
+                        "image": "kubechain/funnel:1.1.0",
+                        "imagePullPolicy": "IfNotPresent",
+                        "ports": [],
+                        "env": [],
+                        "volumeMounts": [
+                            {
+                                "name": "d33d5002-e841-5248-b000-72374f52d416-volume",
+                                "mountPath": "/usr/src/app/from/peers/peer20.org1/msp/admincerts"
+                            },
+                            {
+                                "name": "d678ecb3-f05e-5689-b685-7616fbb1a2b6-volume",
+                                "mountPath": "/usr/src/app/from/peers/peer20.org1/msp/cacerts"
+                            },
+                            {
+                                "name": "2fbdaa75-8ecf-53bf-9d8c-200a5e81794c-volume",
+                                "mountPath": "/usr/src/app/from/peers/peer20.org1/msp/keystore"
+                            },
+                            {
+                                "name": "33c4273f-a6ab-5b49-8af4-5e58e54cfc10-volume",
+                                "mountPath": "/usr/src/app/from/peers/peer20.org1/msp/signcerts"
+                            },
+                            {
+                                "name": "7d1da7ab-8b13-55ec-8938-22c0ade86d83-volume",
+                                "mountPath": "/usr/src/app/from/peers/peer20.org1/msp/tlscacerts"
+                            },
+                            {
+                                "name": "7a06da2a-4589-50a1-9c26-6d0dab947eec-volume",
+                                "mountPath": "/usr/src/app/from/peers/peer20.org1/tls"
+                            },
+                            {
+                                "name": "peer20-pvc-volume",
+                                "mountPath": "/usr/src/app/to/peers/peer20.org1",
+                                "subPath": "peers/peer20.org1"
+                            }
+                        ]
+                    }
+                ],
+                "containers": [
+                    {
+                        "name": "peer20-org1",
+                        "image": "hyperledger/fabric-peer:1.2.0",
+                        "imagePullPolicy": "IfNotPresent",
+                        "securityContext": {
+                            "privileged": true
+                        },
+                        "command": [
+                            "/bin/bash",
+                            "-c",
+                            "--"
+                        ],
+                        "args": [
+                            "sleep 5; peer node start"
+                        ],
+                        "ports": [
+                            {
+                                "containerPort": 7051
+                            },
+                            {
+                                "containerPort": 7052
+                            },
+                            {
+                                "containerPort": 7053
+                            }
+                        ],
+                        "env": [
+                            {
+                                "name": "CORE_VM_ENDPOINT",
+                                "value": "unix:///host/var/run/docker.sock"
+                            },
+                            {
+                                "name": "CORE_LOGGING_LEVEL",
+                                "value": "DEBUG"
+                            },
+                            {
+                                "name": "CORE_PEER_TLS_ENABLED",
+                                "value": "false"
+                            },
+                            {
+                                "name": "CORE_PEER_GOSSIP_USELEADERELECTION",
+                                "value": "true"
+                            },
+                            {
+                                "name": "CORE_PEER_GOSSIP_ORGLEADER",
+                                "value": "false"
+                            },
+                            {
+                                "name": "CORE_PEER_PROFILE_ENABLED",
+                                "value": "true"
+                            },
+                            {
+                                "name": "CORE_PEER_TLS_CERT_FILE",
+                                "value": "/etc/hyperledger/fabric/tls/server.crt"
+                            },
+                            {
+                                "name": "CORE_PEER_TLS_KEY_FILE",
+                                "value": "/etc/hyperledger/fabric/tls/server.key"
+                            },
+                            {
+                                "name": "CORE_PEER_TLS_ROOTCERT_FILE",
+                                "value": "/etc/hyperledger/fabric/tls/ca.crt"
+                            },
+                            {
+                                "name": "CORE_PEER_ID",
+                                "value": "peer20.org1"
+                            },
+                            {
+                                "name": "CORE_PEER_ADDRESS",
+                                "value": "peer20.org1:7051"
+                            },
+                            {
+                                "name": "CORE_PEER_CHAINCODELISTENADDRESS",
+                                "value": "0.0.0.0:7052"
+                            },
+                            {
+                                "name": "CORE_PEER_GOSSIP_EXTERNALENDPOINT",
+                                "value": "peer20.org1:7051"
+                            },
+                            {
+                                "name": "CORE_PEER_LOCALMSPID",
+                                "value": "Org1"
+                            },
+                            {
+                                "name": "CORE_VM_DOCKER_HOSTCONFIG_DNS",
+                                "value": "100.64.0.10"
+                            },
+                            {
+                                "name": "CORE_VM_DOCKER_HOSTCONFIG_DNSSEARCH",
+                                "value": "default.svc.cluster.local svc.cluster.local"
+                            },
+                            {
+                                "name": "CORE_CHAINCODE_LOGGING_LEVEL",
+                                "value": "debug"
+                            },
+                            {
+                                "name": "CORE_CHAINCODE_SHIM",
+                                "value": "debug"
+                            }
+                        ],
+                        "volumeMounts": [
+                            {
+                                "name": "peer-data-volume",
+                                "mountPath": "/var/hyperledger"
+                            },
+                            {
+                                "name": "peer20-pvc-volume",
+                                "mountPath": "/etc/hyperledger/fabric/tls",
+                                "subPath": "peers/peer20.org1/tls"
+                            },
+                            {
+                                "name": "peer20-pvc-volume",
+                                "mountPath": "/etc/hyperledger/fabric/msp",
+                                "subPath": "peers/peer20.org1/msp"
+                            },
+                            {
+                                "name": "3b0e429c-a887-5b76-8f2c-08257a14ded0-volume",
+                                "mountPath": "/opt/gopath/src/github.com/hyperledger/fabric/peer/chaincodes/simple-addition-chaincode"
+                            },
+                            {
+                                "name": "run-volume",
+                                "mountPath": "/host/var/run/"
+                            }
+                        ],
+                        "workingDir": "/opt/gopath/src/github.com/hyperledger/fabric/peer"
+                    }
+                ],
+                "volumes": [
+                    {
+                        "name": "peer-data-volume",
+                        "emptyDir": {}
+                    },
+                    {
+                        "name": "run-volume",
+                        "hostPath": {
+                            "path": "/var/run",
+                            "type": "DirectoryOrCreate"
+                        }
+                    },
+                    {
+                        "name": "peer20-pvc-volume",
+                        "persistentVolumeClaim": {
+                            "claimName": "peer20-pvc"
+                        }
+                    },
+                    {
+                        "name": "d33d5002-e841-5248-b000-72374f52d416-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "Admin-org1-cert.pem",
+                                    "path": "Admin@org1-cert.pem"
+                                }
+                            ],
+                            "name": "d33d5002-e841-5248-b000-72374f52d416",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "d678ecb3-f05e-5689-b685-7616fbb1a2b6-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "ca.org1-cert.pem",
+                                    "path": "ca.org1-cert.pem"
+                                }
+                            ],
+                            "name": "d678ecb3-f05e-5689-b685-7616fbb1a2b6",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "2fbdaa75-8ecf-53bf-9d8c-200a5e81794c-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "9a98435c139f5dfcc86f80cd56741b17f7dd644c891e4dff4c8a8f5acd7e7bb0_sk",
+                                    "path": "9a98435c139f5dfcc86f80cd56741b17f7dd644c891e4dff4c8a8f5acd7e7bb0_sk"
+                                }
+                            ],
+                            "name": "2fbdaa75-8ecf-53bf-9d8c-200a5e81794c",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "33c4273f-a6ab-5b49-8af4-5e58e54cfc10-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "peer20.org1-cert.pem",
+                                    "path": "peer20.org1-cert.pem"
+                                }
+                            ],
+                            "name": "33c4273f-a6ab-5b49-8af4-5e58e54cfc10",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "7d1da7ab-8b13-55ec-8938-22c0ade86d83-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "tlsca.org1-cert.pem",
+                                    "path": "tlsca.org1-cert.pem"
+                                }
+                            ],
+                            "name": "7d1da7ab-8b13-55ec-8938-22c0ade86d83",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "7a06da2a-4589-50a1-9c26-6d0dab947eec-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "ca.crt",
+                                    "path": "ca.crt"
+                                },
+                                {
+                                    "key": "server.crt",
+                                    "path": "server.crt"
+                                },
+                                {
+                                    "key": "server.key",
+                                    "path": "server.key"
+                                }
+                            ],
+                            "name": "7a06da2a-4589-50a1-9c26-6d0dab947eec",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "3b0e429c-a887-5b76-8f2c-08257a14ded0-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "simple-addition-chaincode.go",
+                                    "path": "simple-addition-chaincode.go"
+                                }
+                            ],
+                            "name": "3b0e429c-a887-5b76-8f2c-08257a14ded0",
+                            "optional": false
+                        }
+                    }
+                ],
+                "nodeSelector": {}
+            }
+        }
+    }
+}

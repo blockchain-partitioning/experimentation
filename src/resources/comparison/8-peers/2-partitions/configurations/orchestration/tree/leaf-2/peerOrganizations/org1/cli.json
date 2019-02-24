@@ -1,0 +1,242 @@
+{
+    "apiVersion": "apps/v1beta2",
+    "kind": "Deployment",
+    "metadata": {
+        "name": "cli",
+        "namespace": "org1",
+        "labels": {}
+    },
+    "spec": {
+        "selector": {
+            "matchLabels": {
+                "app": "cli"
+            }
+        },
+        "template": {
+            "metadata": {
+                "labels": {
+                    "app": "cli"
+                }
+            },
+            "spec": {
+                "initContainers": [
+                    {
+                        "name": "funnel",
+                        "image": "kubechain/funnel:1.1.0",
+                        "imagePullPolicy": "IfNotPresent",
+                        "ports": [],
+                        "env": [],
+                        "volumeMounts": [
+                            {
+                                "name": "46d4537a-beda-5a45-a1c2-85f181b6b435-volume",
+                                "mountPath": "/usr/src/app/from/users/Admin@org1/msp/admincerts"
+                            },
+                            {
+                                "name": "99fb5444-7e1c-5de9-847e-10d6329d8e67-volume",
+                                "mountPath": "/usr/src/app/from/users/Admin@org1/msp/cacerts"
+                            },
+                            {
+                                "name": "876d4403-da0d-5394-9c41-3537dcaa5e80-volume",
+                                "mountPath": "/usr/src/app/from/users/Admin@org1/msp/keystore"
+                            },
+                            {
+                                "name": "39aff54c-9710-5857-8b01-645a2eee863f-volume",
+                                "mountPath": "/usr/src/app/from/users/Admin@org1/msp/signcerts"
+                            },
+                            {
+                                "name": "e554fe19-0349-5423-aaf2-65683cf0db3b-volume",
+                                "mountPath": "/usr/src/app/from/users/Admin@org1/msp/tlscacerts"
+                            },
+                            {
+                                "name": "cli-pvc-volume",
+                                "mountPath": "/usr/src/app/to",
+                                "subPath": "users/Admin@org1/msp"
+                            }
+                        ]
+                    }
+                ],
+                "containers": [
+                    {
+                        "name": "cli",
+                        "image": "hyperledger/fabric-tools:1.2.0",
+                        "imagePullPolicy": "IfNotPresent",
+                        "command": [
+                            "/bin/bash",
+                            "-c",
+                            "--"
+                        ],
+                        "args": [
+                            "while true; do sleep 30; done;"
+                        ],
+                        "ports": [],
+                        "env": [
+                            {
+                                "name": "CORE_PEER_TLS_ENABLED",
+                                "value": "false"
+                            },
+                            {
+                                "name": "CORE_VM_ENDPOINT",
+                                "value": "unix:///host/var/run/docker.sock"
+                            },
+                            {
+                                "name": "GOPATH",
+                                "value": "/opt/gopath"
+                            },
+                            {
+                                "name": "CORE_LOGGING_LEVEL",
+                                "value": "DEBUG"
+                            },
+                            {
+                                "name": "CORE_PEER_ID",
+                                "value": "cli"
+                            },
+                            {
+                                "name": "CORE_PEER_ADDRESS",
+                                "value": "peer0.org1:7051"
+                            },
+                            {
+                                "name": "CORE_PEER_LOCALMSPID",
+                                "value": "Org1"
+                            },
+                            {
+                                "name": "CORE_PEER_MSPCONFIGPATH",
+                                "value": "/etc/hyperledger/fabric/msp"
+                            }
+                        ],
+                        "volumeMounts": [
+                            {
+                                "name": "run-volume",
+                                "mountPath": "/host/var/run/"
+                            },
+                            {
+                                "name": "cli-pvc-volume",
+                                "mountPath": "/etc/hyperledger/fabric/msp",
+                                "subPath": "users/Admin@org1/msp"
+                            },
+                            {
+                                "name": "7f84e16f-e795-53b4-9993-0dc133e262a3-volume",
+                                "mountPath": "/opt/gopath/src/github.com/hyperledger/fabric/peer/channels/kubechain"
+                            },
+                            {
+                                "name": "3b0e429c-a887-5b76-8f2c-08257a14ded0-volume",
+                                "mountPath": "/opt/gopath/src/github.com/hyperledger/fabric/peer/chaincodes/simple-addition-chaincode"
+                            }
+                        ],
+                        "workingDir": "/opt/gopath/src/github.com/hyperledger/fabric/peer"
+                    }
+                ],
+                "volumes": [
+                    {
+                        "name": "cli-pvc-volume",
+                        "persistentVolumeClaim": {
+                            "claimName": "cli-pvc"
+                        }
+                    },
+                    {
+                        "name": "7f84e16f-e795-53b4-9993-0dc133e262a3-volume",
+                        "secret": {
+                            "items": [
+                                {
+                                    "key": "kubechain.tx",
+                                    "path": "kubechain.tx"
+                                },
+                                {
+                                    "key": "Org1anchors.tx",
+                                    "path": "Org1anchors.tx"
+                                }
+                            ],
+                            "secretName": "7f84e16f-e795-53b4-9993-0dc133e262a3",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "3b0e429c-a887-5b76-8f2c-08257a14ded0-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "simple-addition-chaincode.go",
+                                    "path": "simple-addition-chaincode.go"
+                                }
+                            ],
+                            "name": "3b0e429c-a887-5b76-8f2c-08257a14ded0",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "46d4537a-beda-5a45-a1c2-85f181b6b435-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "Admin-org1-cert.pem",
+                                    "path": "Admin@org1-cert.pem"
+                                }
+                            ],
+                            "name": "46d4537a-beda-5a45-a1c2-85f181b6b435",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "99fb5444-7e1c-5de9-847e-10d6329d8e67-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "ca.org1-cert.pem",
+                                    "path": "ca.org1-cert.pem"
+                                }
+                            ],
+                            "name": "99fb5444-7e1c-5de9-847e-10d6329d8e67",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "876d4403-da0d-5394-9c41-3537dcaa5e80-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "d7b207e69ab39c8dfe0544cf5bd2a4b4604d00904d861b2cd7d8635629d71122_sk",
+                                    "path": "d7b207e69ab39c8dfe0544cf5bd2a4b4604d00904d861b2cd7d8635629d71122_sk"
+                                }
+                            ],
+                            "name": "876d4403-da0d-5394-9c41-3537dcaa5e80",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "39aff54c-9710-5857-8b01-645a2eee863f-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "Admin-org1-cert.pem",
+                                    "path": "Admin@org1-cert.pem"
+                                }
+                            ],
+                            "name": "39aff54c-9710-5857-8b01-645a2eee863f",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "e554fe19-0349-5423-aaf2-65683cf0db3b-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "tlsca.org1-cert.pem",
+                                    "path": "tlsca.org1-cert.pem"
+                                }
+                            ],
+                            "name": "e554fe19-0349-5423-aaf2-65683cf0db3b",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "run-volume",
+                        "hostPath": {
+                            "path": "/var/run",
+                            "type": "DirectoryOrCreate"
+                        }
+                    }
+                ],
+                "nodeSelector": {}
+            }
+        }
+    }
+}

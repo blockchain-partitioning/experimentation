@@ -1,0 +1,19 @@
+{
+    "apiVersion": "v1",
+    "kind": "PersistentVolumeClaim",
+    "metadata": {
+        "name": "peer29-pvc",
+        "namespace": "org1",
+        "labels": {}
+    },
+    "spec": {
+        "accessModes": [
+            "ReadWriteOnce"
+        ],
+        "resources": {
+            "requests": {
+                "storage": "10Mi"
+            }
+        }
+    }
+}

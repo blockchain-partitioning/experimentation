@@ -1,0 +1,18 @@
+{
+  "executePreamble": true,
+  "executePostamble": true,
+  "amountOfSamples": 10,
+  "run": {
+    "variants": [
+      "control"
+    ],
+    "for": [
+      {
+        "peers": 4,
+        "partitions": [
+          4
+        ]
+      }
+    ]
+  }
+}

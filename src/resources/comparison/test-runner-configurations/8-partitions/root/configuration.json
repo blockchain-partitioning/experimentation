@@ -1,0 +1,95 @@
+{
+  "rounds":[
+    {
+      "name": "round-1",
+      "chainCode": "simple-addition-chaincode",
+      "function": "update",
+      "amountOfTransactions": 5760,
+      "rate": 32
+    },
+    {
+      "name": "round-2",
+      "chainCode": "simple-addition-chaincode",
+      "function": "update",
+      "amountOfTransactions": 11520,
+      "rate": 64
+    },
+    {
+      "name": "round-3",
+      "chainCode": "simple-addition-chaincode",
+      "function": "update",
+      "amountOfTransactions": 17280,
+      "rate": 96
+    },
+    {
+      "name": "round-4",
+      "chainCode": "simple-addition-chaincode",
+      "function": "update",
+      "amountOfTransactions": 23040,
+      "rate": 128
+    },
+    {
+      "name": "round-5",
+      "chainCode": "simple-addition-chaincode",
+      "function": "update",
+      "amountOfTransactions": 28800,
+      "rate": 160
+    },
+    {
+      "name": "round-6",
+      "chainCode": "simple-addition-chaincode",
+      "function": "update",
+      "amountOfTransactions": 34560,
+      "rate": 192
+    },
+    {
+      "name": "round-7",
+      "chainCode": "simple-addition-chaincode",
+      "function": "update",
+      "amountOfTransactions": 40320,
+      "rate": 224
+    },
+    {
+      "name": "round-8",
+      "chainCode": "simple-addition-chaincode",
+      "function": "update",
+      "amountOfTransactions": 46080,
+      "rate": 256
+    },
+    {
+      "name": "max-1",
+      "chainCode": "simple-addition-chaincode",
+      "function": "update",
+      "amountOfTransactions": 172800,
+      "rate": 120
+    },
+    {
+      "name": "max-2",
+      "chainCode": "simple-addition-chaincode",
+      "function": "update",
+      "amountOfTransactions": 187200,
+      "rate": 130
+    },
+    {
+      "name": "max-3",
+      "chainCode": "simple-addition-chaincode",
+      "function": "update",
+      "amountOfTransactions": 201600,
+      "rate": 140
+    },
+    {
+      "name": "max-4",
+      "chainCode": "simple-addition-chaincode",
+      "function": "update",
+      "amountOfTransactions": 216000,
+      "rate": 150
+    },
+    {
+      "name": "max-5",
+      "chainCode": "simple-addition-chaincode",
+      "function": "update",
+      "amountOfTransactions": 230400,
+      "rate": 160
+    }
+  ]
+}

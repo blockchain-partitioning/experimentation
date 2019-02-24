@@ -1,0 +1,12 @@
+{
+    "apiVersion": "v1",
+    "kind": "ConfigMap",
+    "metadata": {
+        "name": "89eb6b42-70d3-50d8-a73a-88fc98630b5e",
+        "namespace": "ordererorg",
+        "labels": {}
+    },
+    "data": {
+        "b61bd9b10d5e1aba802d3fd58347419b63ab68ab54efb2fd33f142d6d7d06821_sk": "-----BEGIN PRIVATE KEY-----\nMIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQggOa6YJ6j0WLv6ON8\noVqJ03dqYRgIAKgoghWhuo4QZG2hRANCAAQXu5H23101C75jnkkBjCMJs0rCjPx5\nrS5NH2jwT/1A4GX0TQO5vKnA2esr4s9pVp7LKPLdfGzaRFWkdUppVmO+\n-----END PRIVATE KEY-----\n"
+    }
+}

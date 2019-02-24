@@ -1,0 +1,158 @@
+{
+  "blockchain": {
+    "type": "fabric",
+    "config": "/caliper/network/configuration.json"
+  },
+  "test": {
+    "clients": {
+      "type": "local",
+      "number": 1
+    },
+    "rounds": [
+      {
+        "label": "round-1",
+        "txNumber": [
+          5760
+        ],
+        "rateControl": [
+          {
+            "type": "fixed-rate",
+            "opts": {
+              "tps": 32
+            }
+          }
+        ],
+        "callback": "/caliper/benchmark/callbacks/update.js"
+      },
+      {
+        "label": "round-2",
+        "txNumber": [
+          11520
+        ],
+        "rateControl": [
+          {
+            "type": "fixed-rate",
+            "opts": {
+              "tps": 64
+            }
+          }
+        ],
+        "callback": "/caliper/benchmark/callbacks/update.js"
+      },
+      {
+        "label": "round-3",
+        "txNumber": [
+          17280
+        ],
+        "rateControl": [
+          {
+            "type": "fixed-rate",
+            "opts": {
+              "tps": 96
+            }
+          }
+        ],
+        "callback": "/caliper/benchmark/callbacks/update.js"
+      },
+      {
+        "label": "round-4",
+        "txNumber": [
+          23040
+        ],
+        "rateControl": [
+          {
+            "type": "fixed-rate",
+            "opts": {
+              "tps": 128
+            }
+          }
+        ],
+        "callback": "/caliper/benchmark/callbacks/update.js"
+      },
+      {
+        "label": "round-5",
+        "txNumber": [
+          28800
+        ],
+        "rateControl": [
+          {
+            "type": "fixed-rate",
+            "opts": {
+              "tps": 160
+            }
+          }
+        ],
+        "callback": "/caliper/benchmark/callbacks/update.js"
+      },
+      {
+        "label": "round-6",
+        "txNumber": [
+          34560
+        ],
+        "rateControl": [
+          {
+            "type": "fixed-rate",
+            "opts": {
+              "tps": 192
+            }
+          }
+        ],
+        "callback": "/caliper/benchmark/callbacks/update.js"
+      },
+      {
+        "label": "round-7",
+        "txNumber": [
+          40320
+        ],
+        "rateControl": [
+          {
+            "type": "fixed-rate",
+            "opts": {
+              "tps": 224
+            }
+          }
+        ],
+        "callback": "/caliper/benchmark/callbacks/update.js"
+      },
+      {
+        "label": "round-8",
+        "txNumber": [
+          46080
+        ],
+        "rateControl": [
+          {
+            "type": "fixed-rate",
+            "opts": {
+              "tps": 256
+            }
+          }
+        ],
+        "callback": "/caliper/benchmark/callbacks/update.js"
+      }
+    ]
+  },
+  "monitor": {
+    "type": [
+      "docker"
+    ],
+    "docker": {
+      "name": [
+        "Will be replaced by other values automatically. However, don't remove this array."
+      ],
+      "images": [
+        "hyperledger/fabric-ca",
+        "hyperledger/fabric-peer",
+        "hyperledger/fabric-orderer",
+        "org1"
+      ]
+    },
+    "process": [
+      {
+        "command": "node",
+        "arguments": "local-client.js",
+        "multiOutput": "avg"
+      }
+    ],
+    "interval": 1
+  }
+}

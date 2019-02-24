@@ -1,0 +1,14 @@
+{
+    "apiVersion": "v1",
+    "kind": "Secret",
+    "metadata": {
+        "name": "7f84e16f-e795-53b4-9993-0dc133e262a3",
+        "namespace": "org1",
+        "labels": {}
+    },
+    "type": "Opaque",
+    "data": {
+        "kubechain.tx": "CpECChcKFQgCGgYI7eSh4QUiCWt1YmVjaGFpbhL1AQryAQoJa3ViZWNoYWluEisSGQoLQXBwbGljYXRpb24SChIICgRPcmcxEgAaDgoKQ29uc29ydGl1bRIAGrcBEpABCgtBcHBsaWNhdGlvbhKAAQgBEggKBE9yZzESACIiCgZBZG1pbnMSGBIOCAMSCgoGQWRtaW5zEAIaBkFkbWlucyIiCgdSZWFkZXJzEhcSDQgDEgkKB1JlYWRlcnMaBkFkbWlucyIiCgdXcml0ZXJzEhcSDQgDEgkKB1dyaXRlcnMaBkFkbWlucyoGQWRtaW5zGiIKCkNvbnNvcnRpdW0SFBISChBTYW1wbGVDb25zb3J0aXVt",
+        "Org1anchors.tx": "CoYCCg8KDQgCIglrdWJlY2hhaW4S8gEK7wEKCWt1YmVjaGFpbhJUElIKC0FwcGxpY2F0aW9uEkMIARI3CgRPcmcxEi8aBwoDTVNQEgAiCwoHUmVhZGVycxIAIgsKB1dyaXRlcnMSACIKCgZBZG1pbnMSACoGQWRtaW5zGosBEogBCgtBcHBsaWNhdGlvbhJ5CAESbQoET3JnMRJlCAEaBwoDTVNQEgAaKgoLQW5jaG9yUGVlcnMSGxIRCg8KCnBlZXIwLm9yZzEQizcaBkFkbWlucyILCgdSZWFkZXJzEgAiCwoHV3JpdGVycxIAIgoKBkFkbWlucxIAKgZBZG1pbnMqBkFkbWlucw=="
+    }
+}

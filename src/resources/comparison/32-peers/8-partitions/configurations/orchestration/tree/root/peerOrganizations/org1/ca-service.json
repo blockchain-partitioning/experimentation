@@ -1,0 +1,24 @@
+{
+    "apiVersion": "v1",
+    "kind": "Service",
+    "metadata": {
+        "name": "ca",
+        "namespace": "org1",
+        "labels": {}
+    },
+    "spec": {
+        "selector": {
+            "app": "hyperledger",
+            "role": "ca",
+            "org": "org1",
+            "name": "ca"
+        },
+        "type": "ClusterIP",
+        "ports": [
+            {
+                "name": "endpoint",
+                "port": 7054
+            }
+        ]
+    }
+}

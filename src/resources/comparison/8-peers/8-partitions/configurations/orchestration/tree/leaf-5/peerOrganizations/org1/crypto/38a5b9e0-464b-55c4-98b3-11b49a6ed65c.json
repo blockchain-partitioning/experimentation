@@ -1,0 +1,12 @@
+{
+    "apiVersion": "v1",
+    "kind": "ConfigMap",
+    "metadata": {
+        "name": "38a5b9e0-464b-55c4-98b3-11b49a6ed65c",
+        "namespace": "org1",
+        "labels": {}
+    },
+    "data": {
+        "peer0.org1-cert.pem": "-----BEGIN CERTIFICATE-----\nMIIB9TCCAZugAwIBAgIQaMFEAAaLbdf2AnvogRz9cjAKBggqhkjOPQQDAjBbMQsw\nCQYDVQQGEwJVUzETMBEGA1UECBMKQ2FsaWZvcm5pYTEWMBQGA1UEBxMNU2FuIEZy\nYW5jaXNjbzENMAsGA1UEChMEb3JnMTEQMA4GA1UEAxMHY2Eub3JnMTAeFw0xODEx\nMjIxNjE0MjJaFw0yODExMTkxNjE0MjJaME8xCzAJBgNVBAYTAlVTMRMwEQYDVQQI\nEwpDYWxpZm9ybmlhMRYwFAYDVQQHEw1TYW4gRnJhbmNpc2NvMRMwEQYDVQQDEwpw\nZWVyMC5vcmcxMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEXA8AzHCDRC9QF2Gt\nhins+FdqjSzcWGniSKQxeGFWF2pxmH2JU7MLjuAknmfAo9g9PV8FFWf8OjucSlYS\nBcCAtKNNMEswDgYDVR0PAQH/BAQDAgeAMAwGA1UdEwEB/wQCMAAwKwYDVR0jBCQw\nIoAgOjJl+XE8DTaZs8hXCuY27D/6d+i4pTPmQPrA8EfYCzQwCgYIKoZIzj0EAwID\nSAAwRQIhAKGfq/QegiTQ27Cwjn2ArH0NzgSlnVUA2X0/PNQxTP+BAiAvWFbgGq2b\nR8b5syTvVuwGo5+hOgSzpGpy2Pi33ucZ9g==\n-----END CERTIFICATE-----\n"
+    }
+}

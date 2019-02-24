@@ -1,0 +1,316 @@
+{
+    "apiVersion": "apps/v1beta2",
+    "kind": "Deployment",
+    "metadata": {
+        "name": "ca",
+        "namespace": "org1",
+        "labels": {}
+    },
+    "spec": {
+        "selector": {
+            "matchLabels": {
+                "app": "hyperledger",
+                "role": "ca",
+                "org": "org1",
+                "name": "ca"
+            }
+        },
+        "template": {
+            "metadata": {
+                "labels": {
+                    "app": "hyperledger",
+                    "role": "ca",
+                    "org": "org1",
+                    "name": "ca"
+                }
+            },
+            "spec": {
+                "initContainers": [
+                    {
+                        "name": "funnel",
+                        "image": "kubechain/funnel:1.1.0",
+                        "imagePullPolicy": "IfNotPresent",
+                        "ports": [],
+                        "env": [],
+                        "volumeMounts": [
+                            {
+                                "name": "253b45c6-7ab1-5736-94fe-9f4b05750ff3-volume",
+                                "mountPath": "/usr/src/app/from/ca"
+                            },
+                            {
+                                "name": "30f050cd-01a6-5c2f-a90b-a5e56e4c28e6-volume",
+                                "mountPath": "/usr/src/app/from/msp/cacerts"
+                            },
+                            {
+                                "name": "fc1c3c54-5ab5-5272-a82c-55186c8b734c-volume",
+                                "mountPath": "/usr/src/app/from/msp/tlscacerts"
+                            },
+                            {
+                                "name": "0de93a82-6262-5a8f-b4bb-7d539933d7ec-volume",
+                                "mountPath": "/usr/src/app/from/peers/peer0.org1/msp/cacerts"
+                            },
+                            {
+                                "name": "7ae055b2-a632-5a83-9cc2-8e2da230369e-volume",
+                                "mountPath": "/usr/src/app/from/peers/peer0.org1/msp/tlscacerts"
+                            },
+                            {
+                                "name": "38e8af0e-a28e-5b9e-b6bb-179b4319347f-volume",
+                                "mountPath": "/usr/src/app/from/peers/peer1.org1/msp/cacerts"
+                            },
+                            {
+                                "name": "2c7bd36c-3bb1-5f3a-9d05-8d8b794fbfaf-volume",
+                                "mountPath": "/usr/src/app/from/peers/peer1.org1/msp/tlscacerts"
+                            },
+                            {
+                                "name": "7ee495e3-8cf3-57ec-8e04-de7a1111c2eb-volume",
+                                "mountPath": "/usr/src/app/from/tlsca"
+                            },
+                            {
+                                "name": "99fb5444-7e1c-5de9-847e-10d6329d8e67-volume",
+                                "mountPath": "/usr/src/app/from/users/Admin@org1/msp/cacerts"
+                            },
+                            {
+                                "name": "e554fe19-0349-5423-aaf2-65683cf0db3b-volume",
+                                "mountPath": "/usr/src/app/from/users/Admin@org1/msp/tlscacerts"
+                            },
+                            {
+                                "name": "0990a828-bd52-5dfc-9c33-557c5dce7d97-volume",
+                                "mountPath": "/usr/src/app/from/users/User1@org1/msp/cacerts"
+                            },
+                            {
+                                "name": "35160256-be28-5239-8f9b-4e9216f6d38a-volume",
+                                "mountPath": "/usr/src/app/from/users/User1@org1/msp/tlscacerts"
+                            },
+                            {
+                                "name": "ca-volume",
+                                "mountPath": "/usr/src/app/to",
+                                "subPath": "ca/"
+                            }
+                        ]
+                    }
+                ],
+                "containers": [
+                    {
+                        "name": "ca",
+                        "image": "hyperledger/fabric-ca:x86_64-1.0.6",
+                        "imagePullPolicy": "IfNotPresent",
+                        "command": [
+                            "sh"
+                        ],
+                        "args": [
+                            "-c",
+                            " fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.org1-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/bc09a0a8473a641518c231386059c454b0fc5d0dc56dad1183a98b3d68a64619_sk -b admin:adminpw -d "
+                        ],
+                        "ports": [
+                            {
+                                "containerPort": 7054
+                            }
+                        ],
+                        "env": [
+                            {
+                                "name": "FABRIC_CA_HOME",
+                                "value": "/etc/hyperledger/fabric-ca-server"
+                            },
+                            {
+                                "name": "FABRIC_CA_SERVER_CA_NAME",
+                                "value": "ca"
+                            },
+                            {
+                                "name": "FABRIC_CA_SERVER_TLS_ENABLED",
+                                "value": "false"
+                            },
+                            {
+                                "name": "FABRIC_CA_SERVER_TLS_CERTFILE",
+                                "value": "/etc/hyperledger/fabric-ca-server-config/ca.org1-cert.pem"
+                            },
+                            {
+                                "name": "FABRIC_CA_SERVER_TLS_KEYFILE",
+                                "value": "/etc/hyperledger/fabric-ca-server-config/bc09a0a8473a641518c231386059c454b0fc5d0dc56dad1183a98b3d68a64619_sk"
+                            }
+                        ],
+                        "volumeMounts": [
+                            {
+                                "name": "ca-volume",
+                                "mountPath": "/etc/hyperledger/fabric-ca-server-config",
+                                "subPath": "ca/"
+                            }
+                        ]
+                    }
+                ],
+                "volumes": [
+                    {
+                        "name": "ca-volume",
+                        "persistentVolumeClaim": {
+                            "claimName": "ca"
+                        }
+                    },
+                    {
+                        "name": "253b45c6-7ab1-5736-94fe-9f4b05750ff3-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "bc09a0a8473a641518c231386059c454b0fc5d0dc56dad1183a98b3d68a64619_sk",
+                                    "path": "bc09a0a8473a641518c231386059c454b0fc5d0dc56dad1183a98b3d68a64619_sk"
+                                },
+                                {
+                                    "key": "ca.org1-cert.pem",
+                                    "path": "ca.org1-cert.pem"
+                                }
+                            ],
+                            "name": "253b45c6-7ab1-5736-94fe-9f4b05750ff3",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "30f050cd-01a6-5c2f-a90b-a5e56e4c28e6-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "ca.org1-cert.pem",
+                                    "path": "ca.org1-cert.pem"
+                                }
+                            ],
+                            "name": "30f050cd-01a6-5c2f-a90b-a5e56e4c28e6",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "fc1c3c54-5ab5-5272-a82c-55186c8b734c-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "tlsca.org1-cert.pem",
+                                    "path": "tlsca.org1-cert.pem"
+                                }
+                            ],
+                            "name": "fc1c3c54-5ab5-5272-a82c-55186c8b734c",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "0de93a82-6262-5a8f-b4bb-7d539933d7ec-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "ca.org1-cert.pem",
+                                    "path": "ca.org1-cert.pem"
+                                }
+                            ],
+                            "name": "0de93a82-6262-5a8f-b4bb-7d539933d7ec",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "7ae055b2-a632-5a83-9cc2-8e2da230369e-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "tlsca.org1-cert.pem",
+                                    "path": "tlsca.org1-cert.pem"
+                                }
+                            ],
+                            "name": "7ae055b2-a632-5a83-9cc2-8e2da230369e",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "38e8af0e-a28e-5b9e-b6bb-179b4319347f-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "ca.org1-cert.pem",
+                                    "path": "ca.org1-cert.pem"
+                                }
+                            ],
+                            "name": "38e8af0e-a28e-5b9e-b6bb-179b4319347f",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "2c7bd36c-3bb1-5f3a-9d05-8d8b794fbfaf-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "tlsca.org1-cert.pem",
+                                    "path": "tlsca.org1-cert.pem"
+                                }
+                            ],
+                            "name": "2c7bd36c-3bb1-5f3a-9d05-8d8b794fbfaf",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "7ee495e3-8cf3-57ec-8e04-de7a1111c2eb-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "9d5da690b8aa58bf2f75fe015b0751b8f980846b018867bd2bf3a25ad5e04e02_sk",
+                                    "path": "9d5da690b8aa58bf2f75fe015b0751b8f980846b018867bd2bf3a25ad5e04e02_sk"
+                                },
+                                {
+                                    "key": "tlsca.org1-cert.pem",
+                                    "path": "tlsca.org1-cert.pem"
+                                }
+                            ],
+                            "name": "7ee495e3-8cf3-57ec-8e04-de7a1111c2eb",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "99fb5444-7e1c-5de9-847e-10d6329d8e67-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "ca.org1-cert.pem",
+                                    "path": "ca.org1-cert.pem"
+                                }
+                            ],
+                            "name": "99fb5444-7e1c-5de9-847e-10d6329d8e67",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "e554fe19-0349-5423-aaf2-65683cf0db3b-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "tlsca.org1-cert.pem",
+                                    "path": "tlsca.org1-cert.pem"
+                                }
+                            ],
+                            "name": "e554fe19-0349-5423-aaf2-65683cf0db3b",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "0990a828-bd52-5dfc-9c33-557c5dce7d97-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "ca.org1-cert.pem",
+                                    "path": "ca.org1-cert.pem"
+                                }
+                            ],
+                            "name": "0990a828-bd52-5dfc-9c33-557c5dce7d97",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "35160256-be28-5239-8f9b-4e9216f6d38a-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "tlsca.org1-cert.pem",
+                                    "path": "tlsca.org1-cert.pem"
+                                }
+                            ],
+                            "name": "35160256-be28-5239-8f9b-4e9216f6d38a",
+                            "optional": false
+                        }
+                    }
+                ],
+                "nodeSelector": {}
+            }
+        }
+    }
+}

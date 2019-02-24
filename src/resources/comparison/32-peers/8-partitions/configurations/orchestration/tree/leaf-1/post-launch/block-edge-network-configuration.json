@@ -1,0 +1,12 @@
+{
+    "apiVersion": "v1",
+    "kind": "ConfigMap",
+    "metadata": {
+        "name": "block-edge-network-configuration",
+        "namespace": "test-runner",
+        "labels": {}
+    },
+    "data": {
+        "network.json": "{\"orderer\":{\"url\":\"grpc://orderer0.ordererorg:7050\",\"mspid\":\"OrdererOrg\",\"user\":{\"name\":\"Admin\",\"key\":\"/block-edge/network/crypto/ordererorg/users/Admin@ordererorg/msp/keystore/3d95e8441d4abe9f6828bc5b28f5dc425ce7ac85b7d70675ed5900846baebdce_sk\",\"cert\":\"/block-edge/network/crypto/ordererorg/users/Admin@ordererorg/msp/signcerts/Admin@ordererorg-cert.pem\"},\"server-hostname\":\"orderer0.ordererorg\",\"tls_cacerts\":\"/block-edge/network/crypto/ordererorg/orderers/orderer0.ordererorg/tls/ca.crt\"},\"Org1\":{\"name\":\"Org1\",\"mspid\":\"Org1\",\"ca\":{\"url\":\"https://ca.org1:7054\",\"name\":\"ca.org1\"},\"user\":{\"name\":\"Admin\",\"key\":\"/block-edge/network/crypto/org1/users/Admin@org1/msp/keystore/afca1cdcdc70812bc69fe547ab7c657e00c84bbcf48344f9d432737cefbbff04_sk\",\"cert\":\"/block-edge/network/crypto/org1/users/Admin@org1/msp/signcerts/Admin@org1-cert.pem\"},\"peer0\":{\"requests\":\"grpc://peer0.org1:7051\",\"events\":\"grpc://peer0.org1:7053\",\"server-hostname\":\"peer0.org1\",\"tls_cacerts\":\"/block-edge/network/crypto/org1/peers/peer0.org1/tls/ca.crt\"},\"peer1\":{\"requests\":\"grpc://peer1.org1:7051\",\"events\":\"grpc://peer1.org1:7053\",\"server-hostname\":\"peer1.org1\",\"tls_cacerts\":\"/block-edge/network/crypto/org1/peers/peer1.org1/tls/ca.crt\"},\"peer2\":{\"requests\":\"grpc://peer2.org1:7051\",\"events\":\"grpc://peer2.org1:7053\",\"server-hostname\":\"peer2.org1\",\"tls_cacerts\":\"/block-edge/network/crypto/org1/peers/peer2.org1/tls/ca.crt\"},\"peer3\":{\"requests\":\"grpc://peer3.org1:7051\",\"events\":\"grpc://peer3.org1:7053\",\"server-hostname\":\"peer3.org1\",\"tls_cacerts\":\"/block-edge/network/crypto/org1/peers/peer3.org1/tls/ca.crt\"}}}"
+    }
+}

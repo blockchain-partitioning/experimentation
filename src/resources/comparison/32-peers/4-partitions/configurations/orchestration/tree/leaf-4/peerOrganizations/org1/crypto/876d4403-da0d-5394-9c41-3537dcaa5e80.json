@@ -1,0 +1,12 @@
+{
+    "apiVersion": "v1",
+    "kind": "ConfigMap",
+    "metadata": {
+        "name": "876d4403-da0d-5394-9c41-3537dcaa5e80",
+        "namespace": "org1",
+        "labels": {}
+    },
+    "data": {
+        "dadab45b24d1d0896290438de8535bd99db7c0a50b7b5b84323ec79dee62365a_sk": "-----BEGIN PRIVATE KEY-----\nMIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQg+LqmwiRjlvAuet4G\nOhQj5a3lSWq6Uim72XJsHoFon96hRANCAATfFt5YygE8FLqcR5gs86aDMoXi7e7E\nYd5CH/+A66RAEV5BRX8LyUChEjlULjahz0JKRkXXTlUCPVijbEFWB4NW\n-----END PRIVATE KEY-----\n"
+    }
+}

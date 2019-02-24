@@ -1,0 +1,1 @@
+This was fixed in version 1.2.

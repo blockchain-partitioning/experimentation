@@ -1,0 +1,1336 @@
+{
+    "apiVersion": "apps/v1beta2",
+    "kind": "Deployment",
+    "metadata": {
+        "name": "ca",
+        "namespace": "org1",
+        "labels": {}
+    },
+    "spec": {
+        "selector": {
+            "matchLabels": {
+                "app": "hyperledger",
+                "role": "ca",
+                "org": "org1",
+                "name": "ca"
+            }
+        },
+        "template": {
+            "metadata": {
+                "labels": {
+                    "app": "hyperledger",
+                    "role": "ca",
+                    "org": "org1",
+                    "name": "ca"
+                }
+            },
+            "spec": {
+                "initContainers": [
+                    {
+                        "name": "funnel",
+                        "image": "kubechain/funnel:1.1.0",
+                        "imagePullPolicy": "IfNotPresent",
+                        "ports": [],
+                        "env": [],
+                        "volumeMounts": [
+                            {
+                                "name": "253b45c6-7ab1-5736-94fe-9f4b05750ff3-volume",
+                                "mountPath": "/usr/src/app/from/ca"
+                            },
+                            {
+                                "name": "30f050cd-01a6-5c2f-a90b-a5e56e4c28e6-volume",
+                                "mountPath": "/usr/src/app/from/msp/cacerts"
+                            },
+                            {
+                                "name": "fc1c3c54-5ab5-5272-a82c-55186c8b734c-volume",
+                                "mountPath": "/usr/src/app/from/msp/tlscacerts"
+                            },
+                            {
+                                "name": "0de93a82-6262-5a8f-b4bb-7d539933d7ec-volume",
+                                "mountPath": "/usr/src/app/from/peers/peer0.org1/msp/cacerts"
+                            },
+                            {
+                                "name": "7ae055b2-a632-5a83-9cc2-8e2da230369e-volume",
+                                "mountPath": "/usr/src/app/from/peers/peer0.org1/msp/tlscacerts"
+                            },
+                            {
+                                "name": "38e8af0e-a28e-5b9e-b6bb-179b4319347f-volume",
+                                "mountPath": "/usr/src/app/from/peers/peer1.org1/msp/cacerts"
+                            },
+                            {
+                                "name": "2c7bd36c-3bb1-5f3a-9d05-8d8b794fbfaf-volume",
+                                "mountPath": "/usr/src/app/from/peers/peer1.org1/msp/tlscacerts"
+                            },
+                            {
+                                "name": "4b161cc8-4e56-54a8-9d8b-902ac4413522-volume",
+                                "mountPath": "/usr/src/app/from/peers/peer10.org1/msp/cacerts"
+                            },
+                            {
+                                "name": "e4747f75-c03f-56e2-b177-bff9124b7592-volume",
+                                "mountPath": "/usr/src/app/from/peers/peer10.org1/msp/tlscacerts"
+                            },
+                            {
+                                "name": "c6e77fc6-fa86-51b2-b75c-bba09fb9594b-volume",
+                                "mountPath": "/usr/src/app/from/peers/peer11.org1/msp/cacerts"
+                            },
+                            {
+                                "name": "50dc7680-fe62-5948-a74a-8d3230152073-volume",
+                                "mountPath": "/usr/src/app/from/peers/peer11.org1/msp/tlscacerts"
+                            },
+                            {
+                                "name": "83ec9fdd-8730-55c5-b9b6-c43a10f1affb-volume",
+                                "mountPath": "/usr/src/app/from/peers/peer12.org1/msp/cacerts"
+                            },
+                            {
+                                "name": "74baf6e7-32f4-530e-8f96-efaef5c09ba6-volume",
+                                "mountPath": "/usr/src/app/from/peers/peer12.org1/msp/tlscacerts"
+                            },
+                            {
+                                "name": "b1b652f2-bdb0-56cc-8c05-683162f93a1e-volume",
+                                "mountPath": "/usr/src/app/from/peers/peer13.org1/msp/cacerts"
+                            },
+                            {
+                                "name": "447b92f6-c7bd-5a5a-8397-d1bf0ed6384a-volume",
+                                "mountPath": "/usr/src/app/from/peers/peer13.org1/msp/tlscacerts"
+                            },
+                            {
+                                "name": "c4e25f9c-8b9c-5ab1-b2b5-9a05c6e3edeb-volume",
+                                "mountPath": "/usr/src/app/from/peers/peer14.org1/msp/cacerts"
+                            },
+                            {
+                                "name": "6504a217-382c-565e-9f03-38d5395b07db-volume",
+                                "mountPath": "/usr/src/app/from/peers/peer14.org1/msp/tlscacerts"
+                            },
+                            {
+                                "name": "16c64248-f524-5d0f-a690-c7b7fad07e37-volume",
+                                "mountPath": "/usr/src/app/from/peers/peer15.org1/msp/cacerts"
+                            },
+                            {
+                                "name": "aaaae014-1042-550c-b860-cbfb7eda8258-volume",
+                                "mountPath": "/usr/src/app/from/peers/peer15.org1/msp/tlscacerts"
+                            },
+                            {
+                                "name": "c3bb2a39-767b-52c2-9de0-7b5594b1ee2e-volume",
+                                "mountPath": "/usr/src/app/from/peers/peer16.org1/msp/cacerts"
+                            },
+                            {
+                                "name": "6dc785f7-2ef8-5540-aa83-314b8a89d21c-volume",
+                                "mountPath": "/usr/src/app/from/peers/peer16.org1/msp/tlscacerts"
+                            },
+                            {
+                                "name": "659a9814-8464-5159-b9ea-c843a04d5b48-volume",
+                                "mountPath": "/usr/src/app/from/peers/peer17.org1/msp/cacerts"
+                            },
+                            {
+                                "name": "304fb7c6-d457-5479-bfb0-1aaddd56d8bc-volume",
+                                "mountPath": "/usr/src/app/from/peers/peer17.org1/msp/tlscacerts"
+                            },
+                            {
+                                "name": "4dfb3dd6-32f7-51bd-999f-3cae5168cb20-volume",
+                                "mountPath": "/usr/src/app/from/peers/peer18.org1/msp/cacerts"
+                            },
+                            {
+                                "name": "fe39dc28-d156-5146-849a-37a1e9915416-volume",
+                                "mountPath": "/usr/src/app/from/peers/peer18.org1/msp/tlscacerts"
+                            },
+                            {
+                                "name": "0bed8206-6789-5a44-9a23-462c4c59e815-volume",
+                                "mountPath": "/usr/src/app/from/peers/peer19.org1/msp/cacerts"
+                            },
+                            {
+                                "name": "8eb42ea2-d3bf-589c-b19d-baa64b6fa0b4-volume",
+                                "mountPath": "/usr/src/app/from/peers/peer19.org1/msp/tlscacerts"
+                            },
+                            {
+                                "name": "86aa838a-f5e1-5212-b18d-2946b8b3e9e0-volume",
+                                "mountPath": "/usr/src/app/from/peers/peer2.org1/msp/cacerts"
+                            },
+                            {
+                                "name": "5e746ad5-5ebd-549d-b8a6-8a5f36f6cb68-volume",
+                                "mountPath": "/usr/src/app/from/peers/peer2.org1/msp/tlscacerts"
+                            },
+                            {
+                                "name": "d678ecb3-f05e-5689-b685-7616fbb1a2b6-volume",
+                                "mountPath": "/usr/src/app/from/peers/peer20.org1/msp/cacerts"
+                            },
+                            {
+                                "name": "7d1da7ab-8b13-55ec-8938-22c0ade86d83-volume",
+                                "mountPath": "/usr/src/app/from/peers/peer20.org1/msp/tlscacerts"
+                            },
+                            {
+                                "name": "b163ae36-0445-5247-93b3-93059ccec326-volume",
+                                "mountPath": "/usr/src/app/from/peers/peer21.org1/msp/cacerts"
+                            },
+                            {
+                                "name": "a8935b90-311b-52e2-a23e-f76450710f93-volume",
+                                "mountPath": "/usr/src/app/from/peers/peer21.org1/msp/tlscacerts"
+                            },
+                            {
+                                "name": "3abbb68e-9859-57ac-9aef-5acaecd3b969-volume",
+                                "mountPath": "/usr/src/app/from/peers/peer22.org1/msp/cacerts"
+                            },
+                            {
+                                "name": "0bfff44c-8a7a-5f8d-abd0-30fa9438d46c-volume",
+                                "mountPath": "/usr/src/app/from/peers/peer22.org1/msp/tlscacerts"
+                            },
+                            {
+                                "name": "2ba0b85a-197f-514a-98e6-4d25a8c44df0-volume",
+                                "mountPath": "/usr/src/app/from/peers/peer23.org1/msp/cacerts"
+                            },
+                            {
+                                "name": "23c06da5-e5cd-59ea-bf1b-555f51779bda-volume",
+                                "mountPath": "/usr/src/app/from/peers/peer23.org1/msp/tlscacerts"
+                            },
+                            {
+                                "name": "7fd4e3d0-05fa-5249-8342-26ca5e2f36c5-volume",
+                                "mountPath": "/usr/src/app/from/peers/peer24.org1/msp/cacerts"
+                            },
+                            {
+                                "name": "41332ba8-0a22-509d-9ccc-373a932fd03d-volume",
+                                "mountPath": "/usr/src/app/from/peers/peer24.org1/msp/tlscacerts"
+                            },
+                            {
+                                "name": "6bdb67b8-b3b6-5930-882a-30d3c948c446-volume",
+                                "mountPath": "/usr/src/app/from/peers/peer25.org1/msp/cacerts"
+                            },
+                            {
+                                "name": "4ff76e98-a587-5788-9a08-f629a1ae0fff-volume",
+                                "mountPath": "/usr/src/app/from/peers/peer25.org1/msp/tlscacerts"
+                            },
+                            {
+                                "name": "120b5c72-74f2-5a1d-a1c3-9330208f2fd0-volume",
+                                "mountPath": "/usr/src/app/from/peers/peer26.org1/msp/cacerts"
+                            },
+                            {
+                                "name": "df63c5ac-87c8-501e-9d3b-f8e77345710e-volume",
+                                "mountPath": "/usr/src/app/from/peers/peer26.org1/msp/tlscacerts"
+                            },
+                            {
+                                "name": "73503897-8dd3-5249-ba6a-b2750339e914-volume",
+                                "mountPath": "/usr/src/app/from/peers/peer27.org1/msp/cacerts"
+                            },
+                            {
+                                "name": "3a5a4884-8fc4-5839-b330-4e94e66b3138-volume",
+                                "mountPath": "/usr/src/app/from/peers/peer27.org1/msp/tlscacerts"
+                            },
+                            {
+                                "name": "cae8db76-b837-54fc-8808-90eee95e4891-volume",
+                                "mountPath": "/usr/src/app/from/peers/peer28.org1/msp/cacerts"
+                            },
+                            {
+                                "name": "a17a8391-2bf3-5f30-8dfa-1b528f4825b5-volume",
+                                "mountPath": "/usr/src/app/from/peers/peer28.org1/msp/tlscacerts"
+                            },
+                            {
+                                "name": "ccde8ee5-db99-54f9-80b0-3170b3ee5dc3-volume",
+                                "mountPath": "/usr/src/app/from/peers/peer29.org1/msp/cacerts"
+                            },
+                            {
+                                "name": "c5a96a6f-3fe0-5016-86c5-960770681d76-volume",
+                                "mountPath": "/usr/src/app/from/peers/peer29.org1/msp/tlscacerts"
+                            },
+                            {
+                                "name": "5be9d420-c331-5a03-a74d-a423e710d885-volume",
+                                "mountPath": "/usr/src/app/from/peers/peer3.org1/msp/cacerts"
+                            },
+                            {
+                                "name": "004cf8b1-9fed-5f3d-826d-f1afb7bb296d-volume",
+                                "mountPath": "/usr/src/app/from/peers/peer3.org1/msp/tlscacerts"
+                            },
+                            {
+                                "name": "8ea76459-285f-5d9f-a95b-0c5dde350ded-volume",
+                                "mountPath": "/usr/src/app/from/peers/peer30.org1/msp/cacerts"
+                            },
+                            {
+                                "name": "b08a1873-90cb-577c-a579-af3cb3f3e3c3-volume",
+                                "mountPath": "/usr/src/app/from/peers/peer30.org1/msp/tlscacerts"
+                            },
+                            {
+                                "name": "5d1e3f99-f228-5c24-b433-6b34717af8de-volume",
+                                "mountPath": "/usr/src/app/from/peers/peer31.org1/msp/cacerts"
+                            },
+                            {
+                                "name": "8cf4267f-131a-5949-9e61-594a09bfd24f-volume",
+                                "mountPath": "/usr/src/app/from/peers/peer31.org1/msp/tlscacerts"
+                            },
+                            {
+                                "name": "995bd31e-8893-514c-93a1-b188fafe7ce7-volume",
+                                "mountPath": "/usr/src/app/from/peers/peer4.org1/msp/cacerts"
+                            },
+                            {
+                                "name": "3e83b413-ebc0-5dbd-8ef5-73aafb2d9a9c-volume",
+                                "mountPath": "/usr/src/app/from/peers/peer4.org1/msp/tlscacerts"
+                            },
+                            {
+                                "name": "ec9ee13e-a8c5-5b11-8bf0-57fb37c4b982-volume",
+                                "mountPath": "/usr/src/app/from/peers/peer5.org1/msp/cacerts"
+                            },
+                            {
+                                "name": "0261f2f0-7ab1-53de-8ceb-6cc6176eff81-volume",
+                                "mountPath": "/usr/src/app/from/peers/peer5.org1/msp/tlscacerts"
+                            },
+                            {
+                                "name": "c1a94bab-3f8d-5d8c-bb3b-f995dde323e6-volume",
+                                "mountPath": "/usr/src/app/from/peers/peer6.org1/msp/cacerts"
+                            },
+                            {
+                                "name": "e7473835-b566-536b-b9eb-518739e4b1b5-volume",
+                                "mountPath": "/usr/src/app/from/peers/peer6.org1/msp/tlscacerts"
+                            },
+                            {
+                                "name": "7e21ca32-3a8e-51b9-aabb-9fbadcdf0fa5-volume",
+                                "mountPath": "/usr/src/app/from/peers/peer7.org1/msp/cacerts"
+                            },
+                            {
+                                "name": "4e00a978-e8b8-5c5c-b976-8c94a7ac7168-volume",
+                                "mountPath": "/usr/src/app/from/peers/peer7.org1/msp/tlscacerts"
+                            },
+                            {
+                                "name": "72c25ef6-a2db-525c-913e-cb3aeec4bd5f-volume",
+                                "mountPath": "/usr/src/app/from/peers/peer8.org1/msp/cacerts"
+                            },
+                            {
+                                "name": "81cb4b86-d684-52ac-9e63-70afc5b66aed-volume",
+                                "mountPath": "/usr/src/app/from/peers/peer8.org1/msp/tlscacerts"
+                            },
+                            {
+                                "name": "c208076c-6677-52c5-a3c9-354bc71a793e-volume",
+                                "mountPath": "/usr/src/app/from/peers/peer9.org1/msp/cacerts"
+                            },
+                            {
+                                "name": "84228eec-2d67-5ba3-bb46-e2034cb840ed-volume",
+                                "mountPath": "/usr/src/app/from/peers/peer9.org1/msp/tlscacerts"
+                            },
+                            {
+                                "name": "7ee495e3-8cf3-57ec-8e04-de7a1111c2eb-volume",
+                                "mountPath": "/usr/src/app/from/tlsca"
+                            },
+                            {
+                                "name": "99fb5444-7e1c-5de9-847e-10d6329d8e67-volume",
+                                "mountPath": "/usr/src/app/from/users/Admin@org1/msp/cacerts"
+                            },
+                            {
+                                "name": "e554fe19-0349-5423-aaf2-65683cf0db3b-volume",
+                                "mountPath": "/usr/src/app/from/users/Admin@org1/msp/tlscacerts"
+                            },
+                            {
+                                "name": "0990a828-bd52-5dfc-9c33-557c5dce7d97-volume",
+                                "mountPath": "/usr/src/app/from/users/User1@org1/msp/cacerts"
+                            },
+                            {
+                                "name": "35160256-be28-5239-8f9b-4e9216f6d38a-volume",
+                                "mountPath": "/usr/src/app/from/users/User1@org1/msp/tlscacerts"
+                            },
+                            {
+                                "name": "ca-volume",
+                                "mountPath": "/usr/src/app/to",
+                                "subPath": "ca/"
+                            }
+                        ]
+                    }
+                ],
+                "containers": [
+                    {
+                        "name": "ca",
+                        "image": "hyperledger/fabric-ca:x86_64-1.0.6",
+                        "imagePullPolicy": "IfNotPresent",
+                        "command": [
+                            "sh"
+                        ],
+                        "args": [
+                            "-c",
+                            " fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.org1-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/acda7d410a9f5c4afd724cefcfa928d92c318046170ef549e61489e87229008f_sk -b admin:adminpw -d "
+                        ],
+                        "ports": [
+                            {
+                                "containerPort": 7054
+                            }
+                        ],
+                        "env": [
+                            {
+                                "name": "FABRIC_CA_HOME",
+                                "value": "/etc/hyperledger/fabric-ca-server"
+                            },
+                            {
+                                "name": "FABRIC_CA_SERVER_CA_NAME",
+                                "value": "ca"
+                            },
+                            {
+                                "name": "FABRIC_CA_SERVER_TLS_ENABLED",
+                                "value": "false"
+                            },
+                            {
+                                "name": "FABRIC_CA_SERVER_TLS_CERTFILE",
+                                "value": "/etc/hyperledger/fabric-ca-server-config/ca.org1-cert.pem"
+                            },
+                            {
+                                "name": "FABRIC_CA_SERVER_TLS_KEYFILE",
+                                "value": "/etc/hyperledger/fabric-ca-server-config/acda7d410a9f5c4afd724cefcfa928d92c318046170ef549e61489e87229008f_sk"
+                            }
+                        ],
+                        "volumeMounts": [
+                            {
+                                "name": "ca-volume",
+                                "mountPath": "/etc/hyperledger/fabric-ca-server-config",
+                                "subPath": "ca/"
+                            }
+                        ]
+                    }
+                ],
+                "volumes": [
+                    {
+                        "name": "ca-volume",
+                        "persistentVolumeClaim": {
+                            "claimName": "ca"
+                        }
+                    },
+                    {
+                        "name": "253b45c6-7ab1-5736-94fe-9f4b05750ff3-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "acda7d410a9f5c4afd724cefcfa928d92c318046170ef549e61489e87229008f_sk",
+                                    "path": "acda7d410a9f5c4afd724cefcfa928d92c318046170ef549e61489e87229008f_sk"
+                                },
+                                {
+                                    "key": "ca.org1-cert.pem",
+                                    "path": "ca.org1-cert.pem"
+                                }
+                            ],
+                            "name": "253b45c6-7ab1-5736-94fe-9f4b05750ff3",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "30f050cd-01a6-5c2f-a90b-a5e56e4c28e6-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "ca.org1-cert.pem",
+                                    "path": "ca.org1-cert.pem"
+                                }
+                            ],
+                            "name": "30f050cd-01a6-5c2f-a90b-a5e56e4c28e6",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "fc1c3c54-5ab5-5272-a82c-55186c8b734c-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "tlsca.org1-cert.pem",
+                                    "path": "tlsca.org1-cert.pem"
+                                }
+                            ],
+                            "name": "fc1c3c54-5ab5-5272-a82c-55186c8b734c",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "0de93a82-6262-5a8f-b4bb-7d539933d7ec-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "ca.org1-cert.pem",
+                                    "path": "ca.org1-cert.pem"
+                                }
+                            ],
+                            "name": "0de93a82-6262-5a8f-b4bb-7d539933d7ec",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "7ae055b2-a632-5a83-9cc2-8e2da230369e-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "tlsca.org1-cert.pem",
+                                    "path": "tlsca.org1-cert.pem"
+                                }
+                            ],
+                            "name": "7ae055b2-a632-5a83-9cc2-8e2da230369e",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "38e8af0e-a28e-5b9e-b6bb-179b4319347f-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "ca.org1-cert.pem",
+                                    "path": "ca.org1-cert.pem"
+                                }
+                            ],
+                            "name": "38e8af0e-a28e-5b9e-b6bb-179b4319347f",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "2c7bd36c-3bb1-5f3a-9d05-8d8b794fbfaf-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "tlsca.org1-cert.pem",
+                                    "path": "tlsca.org1-cert.pem"
+                                }
+                            ],
+                            "name": "2c7bd36c-3bb1-5f3a-9d05-8d8b794fbfaf",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "4b161cc8-4e56-54a8-9d8b-902ac4413522-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "ca.org1-cert.pem",
+                                    "path": "ca.org1-cert.pem"
+                                }
+                            ],
+                            "name": "4b161cc8-4e56-54a8-9d8b-902ac4413522",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "e4747f75-c03f-56e2-b177-bff9124b7592-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "tlsca.org1-cert.pem",
+                                    "path": "tlsca.org1-cert.pem"
+                                }
+                            ],
+                            "name": "e4747f75-c03f-56e2-b177-bff9124b7592",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "c6e77fc6-fa86-51b2-b75c-bba09fb9594b-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "ca.org1-cert.pem",
+                                    "path": "ca.org1-cert.pem"
+                                }
+                            ],
+                            "name": "c6e77fc6-fa86-51b2-b75c-bba09fb9594b",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "50dc7680-fe62-5948-a74a-8d3230152073-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "tlsca.org1-cert.pem",
+                                    "path": "tlsca.org1-cert.pem"
+                                }
+                            ],
+                            "name": "50dc7680-fe62-5948-a74a-8d3230152073",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "83ec9fdd-8730-55c5-b9b6-c43a10f1affb-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "ca.org1-cert.pem",
+                                    "path": "ca.org1-cert.pem"
+                                }
+                            ],
+                            "name": "83ec9fdd-8730-55c5-b9b6-c43a10f1affb",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "74baf6e7-32f4-530e-8f96-efaef5c09ba6-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "tlsca.org1-cert.pem",
+                                    "path": "tlsca.org1-cert.pem"
+                                }
+                            ],
+                            "name": "74baf6e7-32f4-530e-8f96-efaef5c09ba6",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "b1b652f2-bdb0-56cc-8c05-683162f93a1e-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "ca.org1-cert.pem",
+                                    "path": "ca.org1-cert.pem"
+                                }
+                            ],
+                            "name": "b1b652f2-bdb0-56cc-8c05-683162f93a1e",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "447b92f6-c7bd-5a5a-8397-d1bf0ed6384a-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "tlsca.org1-cert.pem",
+                                    "path": "tlsca.org1-cert.pem"
+                                }
+                            ],
+                            "name": "447b92f6-c7bd-5a5a-8397-d1bf0ed6384a",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "c4e25f9c-8b9c-5ab1-b2b5-9a05c6e3edeb-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "ca.org1-cert.pem",
+                                    "path": "ca.org1-cert.pem"
+                                }
+                            ],
+                            "name": "c4e25f9c-8b9c-5ab1-b2b5-9a05c6e3edeb",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "6504a217-382c-565e-9f03-38d5395b07db-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "tlsca.org1-cert.pem",
+                                    "path": "tlsca.org1-cert.pem"
+                                }
+                            ],
+                            "name": "6504a217-382c-565e-9f03-38d5395b07db",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "16c64248-f524-5d0f-a690-c7b7fad07e37-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "ca.org1-cert.pem",
+                                    "path": "ca.org1-cert.pem"
+                                }
+                            ],
+                            "name": "16c64248-f524-5d0f-a690-c7b7fad07e37",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "aaaae014-1042-550c-b860-cbfb7eda8258-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "tlsca.org1-cert.pem",
+                                    "path": "tlsca.org1-cert.pem"
+                                }
+                            ],
+                            "name": "aaaae014-1042-550c-b860-cbfb7eda8258",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "c3bb2a39-767b-52c2-9de0-7b5594b1ee2e-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "ca.org1-cert.pem",
+                                    "path": "ca.org1-cert.pem"
+                                }
+                            ],
+                            "name": "c3bb2a39-767b-52c2-9de0-7b5594b1ee2e",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "6dc785f7-2ef8-5540-aa83-314b8a89d21c-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "tlsca.org1-cert.pem",
+                                    "path": "tlsca.org1-cert.pem"
+                                }
+                            ],
+                            "name": "6dc785f7-2ef8-5540-aa83-314b8a89d21c",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "659a9814-8464-5159-b9ea-c843a04d5b48-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "ca.org1-cert.pem",
+                                    "path": "ca.org1-cert.pem"
+                                }
+                            ],
+                            "name": "659a9814-8464-5159-b9ea-c843a04d5b48",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "304fb7c6-d457-5479-bfb0-1aaddd56d8bc-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "tlsca.org1-cert.pem",
+                                    "path": "tlsca.org1-cert.pem"
+                                }
+                            ],
+                            "name": "304fb7c6-d457-5479-bfb0-1aaddd56d8bc",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "4dfb3dd6-32f7-51bd-999f-3cae5168cb20-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "ca.org1-cert.pem",
+                                    "path": "ca.org1-cert.pem"
+                                }
+                            ],
+                            "name": "4dfb3dd6-32f7-51bd-999f-3cae5168cb20",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "fe39dc28-d156-5146-849a-37a1e9915416-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "tlsca.org1-cert.pem",
+                                    "path": "tlsca.org1-cert.pem"
+                                }
+                            ],
+                            "name": "fe39dc28-d156-5146-849a-37a1e9915416",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "0bed8206-6789-5a44-9a23-462c4c59e815-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "ca.org1-cert.pem",
+                                    "path": "ca.org1-cert.pem"
+                                }
+                            ],
+                            "name": "0bed8206-6789-5a44-9a23-462c4c59e815",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "8eb42ea2-d3bf-589c-b19d-baa64b6fa0b4-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "tlsca.org1-cert.pem",
+                                    "path": "tlsca.org1-cert.pem"
+                                }
+                            ],
+                            "name": "8eb42ea2-d3bf-589c-b19d-baa64b6fa0b4",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "86aa838a-f5e1-5212-b18d-2946b8b3e9e0-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "ca.org1-cert.pem",
+                                    "path": "ca.org1-cert.pem"
+                                }
+                            ],
+                            "name": "86aa838a-f5e1-5212-b18d-2946b8b3e9e0",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "5e746ad5-5ebd-549d-b8a6-8a5f36f6cb68-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "tlsca.org1-cert.pem",
+                                    "path": "tlsca.org1-cert.pem"
+                                }
+                            ],
+                            "name": "5e746ad5-5ebd-549d-b8a6-8a5f36f6cb68",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "d678ecb3-f05e-5689-b685-7616fbb1a2b6-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "ca.org1-cert.pem",
+                                    "path": "ca.org1-cert.pem"
+                                }
+                            ],
+                            "name": "d678ecb3-f05e-5689-b685-7616fbb1a2b6",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "7d1da7ab-8b13-55ec-8938-22c0ade86d83-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "tlsca.org1-cert.pem",
+                                    "path": "tlsca.org1-cert.pem"
+                                }
+                            ],
+                            "name": "7d1da7ab-8b13-55ec-8938-22c0ade86d83",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "b163ae36-0445-5247-93b3-93059ccec326-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "ca.org1-cert.pem",
+                                    "path": "ca.org1-cert.pem"
+                                }
+                            ],
+                            "name": "b163ae36-0445-5247-93b3-93059ccec326",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "a8935b90-311b-52e2-a23e-f76450710f93-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "tlsca.org1-cert.pem",
+                                    "path": "tlsca.org1-cert.pem"
+                                }
+                            ],
+                            "name": "a8935b90-311b-52e2-a23e-f76450710f93",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "3abbb68e-9859-57ac-9aef-5acaecd3b969-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "ca.org1-cert.pem",
+                                    "path": "ca.org1-cert.pem"
+                                }
+                            ],
+                            "name": "3abbb68e-9859-57ac-9aef-5acaecd3b969",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "0bfff44c-8a7a-5f8d-abd0-30fa9438d46c-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "tlsca.org1-cert.pem",
+                                    "path": "tlsca.org1-cert.pem"
+                                }
+                            ],
+                            "name": "0bfff44c-8a7a-5f8d-abd0-30fa9438d46c",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "2ba0b85a-197f-514a-98e6-4d25a8c44df0-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "ca.org1-cert.pem",
+                                    "path": "ca.org1-cert.pem"
+                                }
+                            ],
+                            "name": "2ba0b85a-197f-514a-98e6-4d25a8c44df0",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "23c06da5-e5cd-59ea-bf1b-555f51779bda-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "tlsca.org1-cert.pem",
+                                    "path": "tlsca.org1-cert.pem"
+                                }
+                            ],
+                            "name": "23c06da5-e5cd-59ea-bf1b-555f51779bda",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "7fd4e3d0-05fa-5249-8342-26ca5e2f36c5-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "ca.org1-cert.pem",
+                                    "path": "ca.org1-cert.pem"
+                                }
+                            ],
+                            "name": "7fd4e3d0-05fa-5249-8342-26ca5e2f36c5",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "41332ba8-0a22-509d-9ccc-373a932fd03d-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "tlsca.org1-cert.pem",
+                                    "path": "tlsca.org1-cert.pem"
+                                }
+                            ],
+                            "name": "41332ba8-0a22-509d-9ccc-373a932fd03d",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "6bdb67b8-b3b6-5930-882a-30d3c948c446-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "ca.org1-cert.pem",
+                                    "path": "ca.org1-cert.pem"
+                                }
+                            ],
+                            "name": "6bdb67b8-b3b6-5930-882a-30d3c948c446",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "4ff76e98-a587-5788-9a08-f629a1ae0fff-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "tlsca.org1-cert.pem",
+                                    "path": "tlsca.org1-cert.pem"
+                                }
+                            ],
+                            "name": "4ff76e98-a587-5788-9a08-f629a1ae0fff",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "120b5c72-74f2-5a1d-a1c3-9330208f2fd0-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "ca.org1-cert.pem",
+                                    "path": "ca.org1-cert.pem"
+                                }
+                            ],
+                            "name": "120b5c72-74f2-5a1d-a1c3-9330208f2fd0",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "df63c5ac-87c8-501e-9d3b-f8e77345710e-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "tlsca.org1-cert.pem",
+                                    "path": "tlsca.org1-cert.pem"
+                                }
+                            ],
+                            "name": "df63c5ac-87c8-501e-9d3b-f8e77345710e",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "73503897-8dd3-5249-ba6a-b2750339e914-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "ca.org1-cert.pem",
+                                    "path": "ca.org1-cert.pem"
+                                }
+                            ],
+                            "name": "73503897-8dd3-5249-ba6a-b2750339e914",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "3a5a4884-8fc4-5839-b330-4e94e66b3138-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "tlsca.org1-cert.pem",
+                                    "path": "tlsca.org1-cert.pem"
+                                }
+                            ],
+                            "name": "3a5a4884-8fc4-5839-b330-4e94e66b3138",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "cae8db76-b837-54fc-8808-90eee95e4891-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "ca.org1-cert.pem",
+                                    "path": "ca.org1-cert.pem"
+                                }
+                            ],
+                            "name": "cae8db76-b837-54fc-8808-90eee95e4891",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "a17a8391-2bf3-5f30-8dfa-1b528f4825b5-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "tlsca.org1-cert.pem",
+                                    "path": "tlsca.org1-cert.pem"
+                                }
+                            ],
+                            "name": "a17a8391-2bf3-5f30-8dfa-1b528f4825b5",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "ccde8ee5-db99-54f9-80b0-3170b3ee5dc3-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "ca.org1-cert.pem",
+                                    "path": "ca.org1-cert.pem"
+                                }
+                            ],
+                            "name": "ccde8ee5-db99-54f9-80b0-3170b3ee5dc3",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "c5a96a6f-3fe0-5016-86c5-960770681d76-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "tlsca.org1-cert.pem",
+                                    "path": "tlsca.org1-cert.pem"
+                                }
+                            ],
+                            "name": "c5a96a6f-3fe0-5016-86c5-960770681d76",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "5be9d420-c331-5a03-a74d-a423e710d885-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "ca.org1-cert.pem",
+                                    "path": "ca.org1-cert.pem"
+                                }
+                            ],
+                            "name": "5be9d420-c331-5a03-a74d-a423e710d885",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "004cf8b1-9fed-5f3d-826d-f1afb7bb296d-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "tlsca.org1-cert.pem",
+                                    "path": "tlsca.org1-cert.pem"
+                                }
+                            ],
+                            "name": "004cf8b1-9fed-5f3d-826d-f1afb7bb296d",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "8ea76459-285f-5d9f-a95b-0c5dde350ded-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "ca.org1-cert.pem",
+                                    "path": "ca.org1-cert.pem"
+                                }
+                            ],
+                            "name": "8ea76459-285f-5d9f-a95b-0c5dde350ded",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "b08a1873-90cb-577c-a579-af3cb3f3e3c3-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "tlsca.org1-cert.pem",
+                                    "path": "tlsca.org1-cert.pem"
+                                }
+                            ],
+                            "name": "b08a1873-90cb-577c-a579-af3cb3f3e3c3",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "5d1e3f99-f228-5c24-b433-6b34717af8de-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "ca.org1-cert.pem",
+                                    "path": "ca.org1-cert.pem"
+                                }
+                            ],
+                            "name": "5d1e3f99-f228-5c24-b433-6b34717af8de",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "8cf4267f-131a-5949-9e61-594a09bfd24f-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "tlsca.org1-cert.pem",
+                                    "path": "tlsca.org1-cert.pem"
+                                }
+                            ],
+                            "name": "8cf4267f-131a-5949-9e61-594a09bfd24f",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "995bd31e-8893-514c-93a1-b188fafe7ce7-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "ca.org1-cert.pem",
+                                    "path": "ca.org1-cert.pem"
+                                }
+                            ],
+                            "name": "995bd31e-8893-514c-93a1-b188fafe7ce7",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "3e83b413-ebc0-5dbd-8ef5-73aafb2d9a9c-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "tlsca.org1-cert.pem",
+                                    "path": "tlsca.org1-cert.pem"
+                                }
+                            ],
+                            "name": "3e83b413-ebc0-5dbd-8ef5-73aafb2d9a9c",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "ec9ee13e-a8c5-5b11-8bf0-57fb37c4b982-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "ca.org1-cert.pem",
+                                    "path": "ca.org1-cert.pem"
+                                }
+                            ],
+                            "name": "ec9ee13e-a8c5-5b11-8bf0-57fb37c4b982",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "0261f2f0-7ab1-53de-8ceb-6cc6176eff81-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "tlsca.org1-cert.pem",
+                                    "path": "tlsca.org1-cert.pem"
+                                }
+                            ],
+                            "name": "0261f2f0-7ab1-53de-8ceb-6cc6176eff81",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "c1a94bab-3f8d-5d8c-bb3b-f995dde323e6-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "ca.org1-cert.pem",
+                                    "path": "ca.org1-cert.pem"
+                                }
+                            ],
+                            "name": "c1a94bab-3f8d-5d8c-bb3b-f995dde323e6",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "e7473835-b566-536b-b9eb-518739e4b1b5-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "tlsca.org1-cert.pem",
+                                    "path": "tlsca.org1-cert.pem"
+                                }
+                            ],
+                            "name": "e7473835-b566-536b-b9eb-518739e4b1b5",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "7e21ca32-3a8e-51b9-aabb-9fbadcdf0fa5-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "ca.org1-cert.pem",
+                                    "path": "ca.org1-cert.pem"
+                                }
+                            ],
+                            "name": "7e21ca32-3a8e-51b9-aabb-9fbadcdf0fa5",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "4e00a978-e8b8-5c5c-b976-8c94a7ac7168-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "tlsca.org1-cert.pem",
+                                    "path": "tlsca.org1-cert.pem"
+                                }
+                            ],
+                            "name": "4e00a978-e8b8-5c5c-b976-8c94a7ac7168",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "72c25ef6-a2db-525c-913e-cb3aeec4bd5f-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "ca.org1-cert.pem",
+                                    "path": "ca.org1-cert.pem"
+                                }
+                            ],
+                            "name": "72c25ef6-a2db-525c-913e-cb3aeec4bd5f",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "81cb4b86-d684-52ac-9e63-70afc5b66aed-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "tlsca.org1-cert.pem",
+                                    "path": "tlsca.org1-cert.pem"
+                                }
+                            ],
+                            "name": "81cb4b86-d684-52ac-9e63-70afc5b66aed",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "c208076c-6677-52c5-a3c9-354bc71a793e-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "ca.org1-cert.pem",
+                                    "path": "ca.org1-cert.pem"
+                                }
+                            ],
+                            "name": "c208076c-6677-52c5-a3c9-354bc71a793e",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "84228eec-2d67-5ba3-bb46-e2034cb840ed-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "tlsca.org1-cert.pem",
+                                    "path": "tlsca.org1-cert.pem"
+                                }
+                            ],
+                            "name": "84228eec-2d67-5ba3-bb46-e2034cb840ed",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "7ee495e3-8cf3-57ec-8e04-de7a1111c2eb-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "4cd310d6a57360463ec0d12d7d1c9115c4640addd040cd67e96bd1e9c379bfd9_sk",
+                                    "path": "4cd310d6a57360463ec0d12d7d1c9115c4640addd040cd67e96bd1e9c379bfd9_sk"
+                                },
+                                {
+                                    "key": "tlsca.org1-cert.pem",
+                                    "path": "tlsca.org1-cert.pem"
+                                }
+                            ],
+                            "name": "7ee495e3-8cf3-57ec-8e04-de7a1111c2eb",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "99fb5444-7e1c-5de9-847e-10d6329d8e67-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "ca.org1-cert.pem",
+                                    "path": "ca.org1-cert.pem"
+                                }
+                            ],
+                            "name": "99fb5444-7e1c-5de9-847e-10d6329d8e67",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "e554fe19-0349-5423-aaf2-65683cf0db3b-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "tlsca.org1-cert.pem",
+                                    "path": "tlsca.org1-cert.pem"
+                                }
+                            ],
+                            "name": "e554fe19-0349-5423-aaf2-65683cf0db3b",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "0990a828-bd52-5dfc-9c33-557c5dce7d97-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "ca.org1-cert.pem",
+                                    "path": "ca.org1-cert.pem"
+                                }
+                            ],
+                            "name": "0990a828-bd52-5dfc-9c33-557c5dce7d97",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "35160256-be28-5239-8f9b-4e9216f6d38a-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "tlsca.org1-cert.pem",
+                                    "path": "tlsca.org1-cert.pem"
+                                }
+                            ],
+                            "name": "35160256-be28-5239-8f9b-4e9216f6d38a",
+                            "optional": false
+                        }
+                    }
+                ],
+                "nodeSelector": {}
+            }
+        }
+    }
+}

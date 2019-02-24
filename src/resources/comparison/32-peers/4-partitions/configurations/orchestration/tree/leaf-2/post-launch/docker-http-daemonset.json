@@ -1,0 +1,72 @@
+{
+    "apiVersion": "apps/v1beta2",
+    "kind": "DaemonSet",
+    "metadata": {
+        "name": "http-docker-access",
+        "namespace": "kube-system",
+        "labels": {
+            "k8s-app": "http-docker-access"
+        }
+    },
+    "spec": {
+        "selector": {
+            "matchLabels": {
+                "name": "http-docker-access"
+            }
+        },
+        "template": {
+            "metadata": {
+                "labels": {
+                    "name": "http-docker-access"
+                }
+            },
+            "spec": {
+                "initContainers": [],
+                "containers": [
+                    {
+                        "name": "socat",
+                        "image": "alpine/socat",
+                        "imagePullPolicy": "IfNotPresent",
+                        "securityContext": {
+                            "privileged": true
+                        },
+                        "args": [
+                            "-v",
+                            "TCP4-LISTEN:2375,fork,reuseaddr",
+                            "UNIX-CONNECT:/var/run/docker.sock"
+                        ],
+                        "ports": [
+                            {
+                                "name": "http",
+                                "containerPort": 2375,
+                                "hostPort": 2375
+                            }
+                        ],
+                        "env": [
+                            {
+                                "name": "DOCKER_HOST",
+                                "value": "tcp://0.0.0.0:2375"
+                            }
+                        ],
+                        "volumeMounts": [
+                            {
+                                "name": "run-volume",
+                                "mountPath": "/var/run/"
+                            }
+                        ]
+                    }
+                ],
+                "volumes": [
+                    {
+                        "name": "run-volume",
+                        "hostPath": {
+                            "path": "/var/run",
+                            "type": "DirectoryOrCreate"
+                        }
+                    }
+                ],
+                "nodeSelector": {}
+            }
+        }
+    }
+}

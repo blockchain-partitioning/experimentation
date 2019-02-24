@@ -1,0 +1,328 @@
+{
+    "apiVersion": "apps/v1beta2",
+    "kind": "Deployment",
+    "metadata": {
+        "name": "test-runner",
+        "namespace": "test-runner",
+        "labels": {}
+    },
+    "spec": {
+        "selector": {
+            "matchLabels": {
+                "app": "test-runner"
+            }
+        },
+        "template": {
+            "metadata": {
+                "labels": {
+                    "app": "test-runner"
+                }
+            },
+            "spec": {
+                "affinity": {
+                    "podAntiAffinity": {
+                        "requiredDuringSchedulingIgnoredDuringExecution": [
+                            {
+                                "labelSelector": {
+                                    "matchExpressions": [
+                                        {
+                                            "key": "role",
+                                            "operator": "In",
+                                            "values": [
+                                                "peer",
+                                                "orderer"
+                                            ]
+                                        }
+                                    ]
+                                },
+                                "namespaces": [
+                                    "org1",
+                                    "ordererorg"
+                                ],
+                                "topologyKey": "kubernetes.io/hostname"
+                            }
+                        ]
+                    }
+                },
+                "initContainers": [
+                    {
+                        "name": "funnel",
+                        "image": "kubechain/funnel:1.1.0",
+                        "imagePullPolicy": "IfNotPresent",
+                        "ports": [],
+                        "env": [],
+                        "volumeMounts": [
+                            {
+                                "name": "pass-through-volume",
+                                "mountPath": "/usr/src/app/to"
+                            },
+                            {
+                                "name": "f8c01fa1-03a8-5108-82e9-5cb7cdd0a969-volume",
+                                "mountPath": "/usr/src/app/from/simple-addition-chaincode"
+                            }
+                        ]
+                    }
+                ],
+                "containers": [
+                    {
+                        "name": "test-runner",
+                        "image": "robertdiebels/fabric-root-test-runner:0.3.0",
+                        "imagePullPolicy": "Always",
+                        "ports": [
+                            {
+                                "name": "http-server",
+                                "containerPort": 3000
+                            }
+                        ],
+                        "env": [
+                            {
+                                "name": "GOPATH",
+                                "value": "/test-runner/golang"
+                            },
+                            {
+                                "name": "OVERWRITE_GOPATH",
+                                "value": "FALSE"
+                            },
+                            {
+                                "name": "NODES_TO_WATCH",
+                                "value": "[\"http://10.132.0.5:2375/all\",\"http://10.132.0.4:2375/all\",\"http://10.132.0.2:2375/all\",\"http://10.132.0.3:2375/all\"]"
+                            },
+                            {
+                                "name": "CHILDREN",
+                                "value": "[\"35.195.162.215\",\"104.199.90.23\"]"
+                            },
+                            {
+                                "name": "TRANSACTIONS_PER_SECOND"
+                            }
+                        ],
+                        "volumeMounts": [
+                            {
+                                "name": "pass-through-volume",
+                                "mountPath": "/test-runner/golang/src"
+                            },
+                            {
+                                "name": "test-runner-network-configuration-volume",
+                                "mountPath": "/test-runner/network/configuration.json",
+                                "subPath": "network.json"
+                            },
+                            {
+                                "name": "test-runner-benchmark-configuration-volume",
+                                "mountPath": "/test-runner/benchmark/configuration.json",
+                                "subPath": "benchmark.json"
+                            },
+                            {
+                                "name": "d9eb6b3c-6fc0-510b-81c0-839f2861232c-volume",
+                                "mountPath": "/test-runner/network/crypto/org1/users/Admin@org1/msp/keystore"
+                            },
+                            {
+                                "name": "672c2a8a-71a2-5484-aca0-d001fa484947-volume",
+                                "mountPath": "/test-runner/network/crypto/org1/users/Admin@org1/msp/signcerts"
+                            },
+                            {
+                                "name": "21b01815-3f3b-58b5-87e7-b61acebd8c22-volume",
+                                "mountPath": "/test-runner/network/crypto/org1/peers/peer0.org1/tls"
+                            },
+                            {
+                                "name": "58b25330-1de6-5cef-a572-f12369c76eab-volume",
+                                "mountPath": "/test-runner/network/crypto/org1/peers/peer1.org1/tls"
+                            },
+                            {
+                                "name": "9b90dfef-5208-5547-ba71-4a8ca1d87271-volume",
+                                "mountPath": "/test-runner/network/crypto/ordererorg/orderers/orderer0.ordererorg/tls"
+                            },
+                            {
+                                "name": "9e484240-3f5a-5824-8cb7-71e6b28655f7-volume",
+                                "mountPath": "/test-runner/network/crypto/ordererorg/users/Admin@ordererorg/msp/keystore"
+                            },
+                            {
+                                "name": "4399a919-8626-53f0-9b71-90c3d69c0cd3-volume",
+                                "mountPath": "/test-runner/network/crypto/ordererorg/users/Admin@ordererorg/msp/signcerts"
+                            },
+                            {
+                                "name": "178c7c52-fbfe-5d1a-b916-efec8b77365b-volume",
+                                "mountPath": "/test-runner/network/channels/kubechain"
+                            }
+                        ]
+                    }
+                ],
+                "volumes": [
+                    {
+                        "name": "pass-through-volume",
+                        "emptyDir": {}
+                    },
+                    {
+                        "name": "test-runner-network-configuration-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "network.json",
+                                    "path": "network.json"
+                                }
+                            ],
+                            "name": "test-runner-network-configuration",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "test-runner-benchmark-configuration-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "benchmark.json",
+                                    "path": "benchmark.json"
+                                }
+                            ],
+                            "name": "test-runner-benchmark-configuration",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "d9eb6b3c-6fc0-510b-81c0-839f2861232c-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "5c66dcb761772aa7c5abb28ed071a88afc1e9db88feabe75e7a262f3d427ffad_sk",
+                                    "path": "5c66dcb761772aa7c5abb28ed071a88afc1e9db88feabe75e7a262f3d427ffad_sk"
+                                }
+                            ],
+                            "name": "d9eb6b3c-6fc0-510b-81c0-839f2861232c",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "672c2a8a-71a2-5484-aca0-d001fa484947-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "Admin-org1-cert.pem",
+                                    "path": "Admin@org1-cert.pem"
+                                }
+                            ],
+                            "name": "672c2a8a-71a2-5484-aca0-d001fa484947",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "21b01815-3f3b-58b5-87e7-b61acebd8c22-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "ca.crt",
+                                    "path": "ca.crt"
+                                },
+                                {
+                                    "key": "server.crt",
+                                    "path": "server.crt"
+                                },
+                                {
+                                    "key": "server.key",
+                                    "path": "server.key"
+                                }
+                            ],
+                            "name": "21b01815-3f3b-58b5-87e7-b61acebd8c22",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "58b25330-1de6-5cef-a572-f12369c76eab-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "ca.crt",
+                                    "path": "ca.crt"
+                                },
+                                {
+                                    "key": "server.crt",
+                                    "path": "server.crt"
+                                },
+                                {
+                                    "key": "server.key",
+                                    "path": "server.key"
+                                }
+                            ],
+                            "name": "58b25330-1de6-5cef-a572-f12369c76eab",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "9b90dfef-5208-5547-ba71-4a8ca1d87271-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "ca.crt",
+                                    "path": "ca.crt"
+                                },
+                                {
+                                    "key": "server.crt",
+                                    "path": "server.crt"
+                                },
+                                {
+                                    "key": "server.key",
+                                    "path": "server.key"
+                                }
+                            ],
+                            "name": "9b90dfef-5208-5547-ba71-4a8ca1d87271",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "9e484240-3f5a-5824-8cb7-71e6b28655f7-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "e9998382e7089fe83ddfc1ba47e344ba3c8a29b1e582cb3c463dc2440e995850_sk",
+                                    "path": "e9998382e7089fe83ddfc1ba47e344ba3c8a29b1e582cb3c463dc2440e995850_sk"
+                                }
+                            ],
+                            "name": "9e484240-3f5a-5824-8cb7-71e6b28655f7",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "4399a919-8626-53f0-9b71-90c3d69c0cd3-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "Admin-ordererorg-cert.pem",
+                                    "path": "Admin@ordererorg-cert.pem"
+                                }
+                            ],
+                            "name": "4399a919-8626-53f0-9b71-90c3d69c0cd3",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "178c7c52-fbfe-5d1a-b916-efec8b77365b-volume",
+                        "secret": {
+                            "items": [
+                                {
+                                    "key": "kubechain.tx",
+                                    "path": "kubechain.tx"
+                                },
+                                {
+                                    "key": "Org1anchors.tx",
+                                    "path": "Org1anchors.tx"
+                                }
+                            ],
+                            "secretName": "178c7c52-fbfe-5d1a-b916-efec8b77365b",
+                            "optional": false
+                        }
+                    },
+                    {
+                        "name": "f8c01fa1-03a8-5108-82e9-5cb7cdd0a969-volume",
+                        "configMap": {
+                            "items": [
+                                {
+                                    "key": "simple-addition-chaincode.go",
+                                    "path": "simple-addition-chaincode.go"
+                                }
+                            ],
+                            "name": "f8c01fa1-03a8-5108-82e9-5cb7cdd0a969",
+                            "optional": false
+                        }
+                    }
+                ]
+            }
+        }
+    }
+}

@@ -1,0 +1,12 @@
+{
+    "apiVersion": "v1",
+    "kind": "ConfigMap",
+    "metadata": {
+        "name": "bc17376a-929a-57dd-890f-30a0b6a7f16f",
+        "namespace": "org1",
+        "labels": {}
+    },
+    "data": {
+        "peer26.org1-cert.pem": "-----BEGIN CERTIFICATE-----\nMIIB9zCCAZ2gAwIBAgIRAK+xVfa5MSiKozo77iavq2IwCgYIKoZIzj0EAwIwWzEL\nMAkGA1UEBhMCVVMxEzARBgNVBAgTCkNhbGlmb3JuaWExFjAUBgNVBAcTDVNhbiBG\ncmFuY2lzY28xDTALBgNVBAoTBG9yZzExEDAOBgNVBAMTB2NhLm9yZzEwHhcNMTgx\nMjE4MTYyNTI5WhcNMjgxMjE1MTYyNTI5WjBQMQswCQYDVQQGEwJVUzETMBEGA1UE\nCBMKQ2FsaWZvcm5pYTEWMBQGA1UEBxMNU2FuIEZyYW5jaXNjbzEUMBIGA1UEAxML\ncGVlcjI2Lm9yZzEwWTATBgcqhkjOPQIBBggqhkjOPQMBBwNCAAQsr2I+VetIGJSN\nNKgvXVQCdMx6gK+uk2nfgUoxMAqlr409IrllRuMJwIBwLt30ZnpTZzHJNc/YQMka\nAU1x8GLao00wSzAOBgNVHQ8BAf8EBAMCB4AwDAYDVR0TAQH/BAIwADArBgNVHSME\nJDAigCCs2n1BCp9cSv1yTO/PqSjZLDGARhcO9UnmFInocikAjzAKBggqhkjOPQQD\nAgNIADBFAiEAlQflhgsBcbNB+Utn16ddW/gcP/kpQJWL80Mt3Ldzj5kCIBX7R+5a\nearSskA233G84q1HHdJi3v37PB5UYW0MFXhf\n-----END CERTIFICATE-----\n"
+    }
+}
